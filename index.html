@@ -7,20 +7,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Joe, scripts go here!!! -->
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="app.js"></script>
+
 </head>
 <body>
     <div id="wrapper"> <!-- non-body wrapper to contain all 3 sections -->
 
         <div id=header> <!-- Logo, header, nav, searchbar etc -->
+            <form onsubmit="return false">
+                <input type="text" id="stock-input" placeholder="Search for stocks" />
+                <button type="button" id="add-stock-btn" onclick="$('#stock-input').val('')">Submit</button>
+            </form>
         </div>
 
-        <div id="content"> <!-- Stock table -->
+        <div id="content">
+            <ul>
+                <!-- Stock table -->
+            </ul> 
         </div>
 
         <div id="footer"> <!-- Company info, copyright, etc -->
         </div>
     </div>  
-
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
