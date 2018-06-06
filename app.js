@@ -13,3 +13,7 @@ $(document).ready(() => {
         }
     );
 });
+
+const displayStock = array => {
+    return array;
+};
