@@ -12,6 +12,16 @@ $(document).ready(() => {
             $('ul').append('<li>' + stockInput + '</li>');
         }
     );
+    
+    $(function() {
+    $('#stock-input').on("click",function() {
+        const text = $("stock-input").val();   //getting value of text input element
+        const item = $('<li/>')
+          .text(text)
+          .on("click",function() { $(this).remove()});
+        $("#content").prepend(li); 
+    });
+});
 
     // List of added stocks, with the names of users who own them
     const stocks = [
