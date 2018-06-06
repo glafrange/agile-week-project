@@ -15,7 +15,7 @@ $(document).ready(() => {
 
     // List of added stocks, with the names of users who own them
     const stocks = [
-        {ticker: 'AMZN', price: 1696, ownedBy: ['gabriel', 'joe']}
+        {ticker: 'AMZN', price: 1696, ownedBy: ['gabriel', 'joe']} // temp example data
     ];
 });
 
