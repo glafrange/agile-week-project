@@ -54,11 +54,11 @@ $(document).ready(() => {
 
     displayStocks(stocks);
 
+    const users = [];
+    
+    const addUser = (userName) => {
+        users.push(userName);
+    };
+
 });
 
-<<<<<<< HEAD
-const displayStock = array => {
-    return array;
-};
-=======
->>>>>>> 384022ddc5a0e99d55784ea09af38be149cb6615
