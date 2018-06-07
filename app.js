@@ -56,7 +56,7 @@ $(document).ready(() => {
 
     const users = {};
 
-    const currentUser = "";
+    let currentUser = "";
     
     const addUser = (userName) => {
         users[userName] = {
@@ -70,14 +70,22 @@ $(document).ready(() => {
         if(event.which == 13){
             event.preventDefault();
             addUser(event.target.value);
-            console.log(users);
         }
     });
 
     $('#add-user-btn').click((event) => {
         event.preventDefault();
         addUser($('#add-user-input').val());
-        console.log(users);
+    });
+
+    const selectUser = () => {
+        usersDropdown = $('#users-dropdown');
+        currentUser = usersDropdown[0].options[usersDropdown[0].options.selectedIndex].value;
+        console.log("current user: " + currentUser);
+    }
+
+    $('#users-dropdown').on('change', (event) => {
+        selectUser();
     });
 
 });
