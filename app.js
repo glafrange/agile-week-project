@@ -54,11 +54,31 @@ $(document).ready(() => {
 
     displayStocks(stocks);
 
-    const users = [];
+    const users = {};
+
+    const currentUser = "";
     
     const addUser = (userName) => {
-        users.push(userName);
+        users[userName] = {
+            name: userName,
+            stocks: {}
+        };
+        $('#users-dropdown').append("<option value='" + userName + "'>" + userName + "</option>");
     };
+
+    $('#add-user-input').keypress((event) => {
+        if(event.which == 13){
+            event.preventDefault();
+            addUser(event.target.value);
+            console.log(users);
+        }
+    });
+
+    $('#add-user-btn').click((event) => {
+        event.preventDefault();
+        addUser($('#add-user-input').val());
+        console.log(users);
+    });
 
 });
 
