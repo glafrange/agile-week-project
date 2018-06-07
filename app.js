@@ -1,4 +1,16 @@
 $(document).ready(() => {
+
+    const stocks = [];
+
+    class Stock {
+        constructor(ticker, price, name) {
+            this.ticker = ticker;
+            this.price = price;
+            this.name = name;
+        }
+    }
+
+    // Allows Enter key to submit
     $('#stock-input').keypress((event) => {
         if(event.which == 13){
             event.preventDefault();
@@ -6,14 +18,24 @@ $(document).ready(() => {
         }
     });
  
-    $('#add-stock-btn').click(
-        () => {
+    // Gets form input value, current user, and stock price from API, 
+    // saves as an object and pushes to the stock array
+    $('#add-stock-btn').click(() => {
             const stockInput = $('#stock-input').val();
-            $('ul').append('<li>' + stockInput + '</li>');
+            //place holder $$ until API
+            let newStock = new Stock(stockInput, 400 , currentUser);
+
+            stocks.push(newStock);
+            upperCaseTicker(stocks);
+            displayStocks(stocks);
+
+            $('#stock-input').val('');
+
+            console.log(stocks);
         }
     );
     
-    $(function() {
+/*     $(function() {
     $('#stock-input').on("click",function() {
         const text = $("stock-input").val();   //getting value of text input element
         const item = $('<li/>')
@@ -21,15 +43,7 @@ $(document).ready(() => {
           .on("click",function() { $(this).remove()});
         $("#content").prepend(li); 
     });
-});
-
-    // List of added stocks, with the names of users who own them
-    const stocks = [
-        {ticker: 'AMZN', price: 1696, ownedBy: ['gabriel', 'joe', 'chris', 'liz', 'gulia']},
-        {ticker: 'appl', price: 1696, ownedBy: ['gabriel', 'joe', 'connor']},
-        {ticker: 'micRO', price: 1696, ownedBy: ['gabriel', 'joe']},
-        {ticker: 'micRO', price: 1696, ownedBy: ['gabriel']}  // temp example data
-    ];
+}); */
 
 
     // Sets ticker value toUpperCase if the are not already
@@ -40,19 +54,21 @@ $(document).ready(() => {
             }   
         });
         return array;
-    }
+    };
 
-    console.log(upperCaseTicker(stocks));
-
-
-    // Displays Stock to the content div
+    // Displays Stock 
     const displayStocks = array => {
-        array.forEach(stock => {
-            $("#content").append(`<div style="border-bottom: 1px black solid"><p>Ticker: ${stock.ticker}</p> <p>Price: ${stock.price}</p> <p>Owned by: ${stock.ownedBy}</p></div>`);
+        $("table").empty();
+        array.forEach((stock, i) => {
+            $("table").append(`
+                <tr id=${i} style="border-bottom: 1px black solid">
+                    <td>Ticker: ${stock.ticker}</td>
+                    <td>Price: ${stock.price}</td> 
+                    <td>Owned by: ${stock.name}</td>
+                </tr>
+            `);
         })
-    }
-
-    displayStocks(stocks);
+    };
 
     const users = {};
 
