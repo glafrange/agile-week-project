@@ -13,15 +13,15 @@ $(document).ready(() => {
         }
     );
     
-    $(function() {
-    $('#stock-input').on("click",function() {
-        const text = $("content").val();   //getting value of text input element
-        const item = $('<li/>')
-          .text(text)
-          .on("click",function() { $(this).remove()});
-        $("#content").prepend(li); 
+     
+    $('#delete-stock').click(
+        () => {
+        const item = $('#content')
+        $('ul').prepend("<li>"+item.val()+"</li>");
     });
-});
+    $('ul').on('click', 'li', function() {
+        $(this).remove();
+    });
 
     // List of added stocks, with the names of users who own them
     const stocks = [
@@ -56,9 +56,6 @@ $(document).ready(() => {
 
 });
 
-<<<<<<< HEAD
 const displayStock = array => {
     return array;
 };
-=======
->>>>>>> 384022ddc5a0e99d55784ea09af38be149cb6615
