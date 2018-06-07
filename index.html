@@ -14,6 +14,11 @@
 
         <div id=header> <!-- Logo, header, nav, searchbar etc -->
             <form onsubmit="return false">
+                <input type="text" id="add-user-input" placeholder="Enter new user"/>
+                <button type="button" id="add-user-btn">Add User</button>
+                <select id="users-dropdown"></select>
+            </form>
+            <form onsubmit="return false">
                 <input type="text" id="stock-input" placeholder="Search for stocks" />
                 <button type="button" id="add-stock-btn" onclick="$('#stock-input').val('')">Submit</button>
             </form>
