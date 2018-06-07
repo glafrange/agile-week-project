@@ -56,9 +56,3 @@ $(document).ready(() => {
 
 });
 
-<<<<<<< HEAD
-const displayStock = array => {
-    return array;
-};
-=======
->>>>>>> 384022ddc5a0e99d55784ea09af38be149cb6615
