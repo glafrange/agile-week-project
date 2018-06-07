@@ -32,7 +32,6 @@ $(document).ready(() => {
                     type: 'POST',
                     dataType: "jsonp",
                     success: function(res) {
-                        const stockInput = $('#stock-input').val();
                         let newStock = new Stock(stockInput, res.price, currentUser);
                         stocks.push(newStock);
                         upperCaseTicker(stocks);
