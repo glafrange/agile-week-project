@@ -15,7 +15,7 @@ $(document).ready(() => {
     
     $(function() {
     $('#stock-input').on("click",function() {
-        const text = $("stock-input").val();   //getting value of text input element
+        const text = $("content").val();   //getting value of text input element
         const item = $('<li/>')
           .text(text)
           .on("click",function() { $(this).remove()});
