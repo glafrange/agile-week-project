@@ -80,6 +80,8 @@ $(document).ready(() => {
             stocks: {}
         };
         $('#users-dropdown').append("<option value='" + userName + "'>" + userName + "</option>");
+        currentUser = userName;
+        console.log(currentUser);
     };
 
     $('#add-user-input').keypress((event) => {
