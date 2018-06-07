@@ -54,10 +54,13 @@ $(document).ready(() => {
 
     displayStocks(stocks);
 
-    const users = [];
+    const users = {};
     
     const addUser = (userName) => {
-        users.push(userName);
+        users[userName] = {
+            name: userName,
+            stocks: {}
+        }
     };
 
 });
