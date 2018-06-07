@@ -17,21 +17,36 @@ $(document).ready(() => {
             $('#add-stock-btn').click();
         }
     });
+
+    
  
     // Gets form input value, current user, and stock price from API, 
     // saves as an object and pushes to the stock array
     $('#add-stock-btn').click(() => {
             const stockInput = $('#stock-input').val();
-            //place holder $$ until API
-            let newStock = new Stock(stockInput, 400 , currentUser);
-
-            stocks.push(newStock);
-            upperCaseTicker(stocks);
-            displayStocks(stocks);
-
+            function callAPI() {
+                var query = $('#stock-input').val();
+                var url = "https://api.iextrading.com/1.0/stock/" + query + "/batch?types=price";
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    dataType: "jsonp",
+                    success: function(res) {
+                        const stockInput = $('#stock-input').val();
+                        let newStock = new Stock(stockInput, res.price, currentUser);
+                        stocks.push(newStock);
+                        upperCaseTicker(stocks);
+                        displayStocks(stocks);
+                        console.log(stocks);
+                },
+                    error: function(err){
+                        console.log(err);
+                        alert("We don't recognize this ticker symbol, please check your input and try again");
+                    }
+                });
+            };
+            callAPI();
             $('#stock-input').val('');
-
-            console.log(stocks);
         }
     );
     
