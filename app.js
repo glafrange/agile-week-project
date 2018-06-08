@@ -95,6 +95,7 @@ $(document).ready(() => {
         };
         $('#users-dropdown').append("<option value='" + userName + "'>" + userName + "</option>");
         currentUser = userName;
+        $('#users-dropdown')[0].options.selectedIndex = $('#users-dropdown')[0].options.length - 1;
         console.log(currentUser);
     };
 
