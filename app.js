@@ -92,6 +92,10 @@ $(document).ready(() => {
         let userNames = [];
         Object.keys(users).forEach((user) => userNames.push(user));
         if (userNames.includes(userName)) {
+            $('#users-dropdown')[0].options.selectedIndex = Array.from($('#users-dropdown')[0].options).map((item) => {
+                return item.value;
+            }).indexOf(userName);
+            currentUser = userName;
             return;
         }
         users[userName] = {
