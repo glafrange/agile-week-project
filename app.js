@@ -89,6 +89,11 @@ $(document).ready(() => {
     let currentUser = null;
     
     const addUser = (userName) => {
+        let userNames = [];
+        Object.keys(users).forEach((user) => userNames.push(user));
+        if (userNames.includes(userName)) {
+            return;
+        }
         users[userName] = {
             name: userName,
             stocks: {}
