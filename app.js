@@ -86,7 +86,7 @@ $(document).ready(() => {
 
     const users = {};
 
-    let currentUser = "";
+    let currentUser = null;
     
     const addUser = (userName) => {
         users[userName] = {
