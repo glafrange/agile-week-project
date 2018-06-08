@@ -1,9 +1,15 @@
 $(document).ready(() => {
 
-    const stocks = [];
+    const stocks = {
+        XXXf: {price: 1750, name: 'Chris'},
+        vvvf: {price: 1139, name: 'Chris'},
+        rrrf: {price: 540, name: 'Chris'},
+        qqqf: {price: 666, name: 'Chris'},
+        ffff: {price: 666, name: 'Chris'}
+    };
 
     class Stock {
-        constructor(ticker, price, name) {
+        constructor(ticker, price) {
             this.ticker = ticker;
             this.price = price;
             this.name = name;
@@ -18,7 +24,6 @@ $(document).ready(() => {
         }
     });
 
-    
  
     // Gets form input value, current user, and stock price from API, 
     // saves as an object and pushes to the stock array
@@ -71,18 +76,24 @@ $(document).ready(() => {
     };
 
     // Displays Stock 
-    const displayStocks = array => {
+    const displayStocks = obj => {
         $("table").empty();
-        array.forEach((stock, i) => {
-            $("table").append(`
-                <tr id=${i} style="border-bottom: 1px black solid">
-                    <td>Ticker: ${stock.ticker}</td>
-                    <td>Price: ${stock.price}</td> 
-                    <td>Owned by: ${stock.name}</td>
-                </tr>
-            `);
-        })
+        for(let key in stocks){
+            if (!stocks.hasOwnProperty(key)) continue;
+            let keyData = `<tr id=${key}> <td>${key}</td>`;
+        
+            let obj = stocks[key];
+            for(let prop in obj) {
+                if (!obj.hasOwnProperty(prop)) continue;
+                 keyData += `<td>${prop}: ${obj[prop]}</td> `;
+            }
+            keyData += "</tr>";
+            $("table").append(keyData );
+        }
+        
     };
+
+    displayStocks(stocks);
 
     const users = {};
 
