@@ -19,7 +19,11 @@ $(document).ready(() => {
     });
 
     
- 
+    // ToolTip Function 
+    $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+});
+
     // Gets form input value, current user, and stock price from API, 
     // saves as an object and pushes to the stock array
     $('#add-stock-btn').click(() => {
