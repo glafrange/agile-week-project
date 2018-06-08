@@ -76,13 +76,13 @@ $(document).ready(() => {
 
     // Displays Stock 
     const displayStocks = array => {
-        $("table").empty();
+        $("tbody").empty();
         array.forEach((stock, i) => {
-            $("table").append(`
+            $("tbody").append(`
                 <tr id=${i} style="border-bottom: 1px black solid">
-                    <td>Ticker: ${stock.ticker}</td>
-                    <td>Price: ${stock.price}</td> 
-                    <td>Owned by: ${stock.name}</td>
+                    <td>${stock.ticker}</td>
+                    <td>${stock.price}</td> 
+                    <td>${stock.name}</td>
                 </tr>
             `);
         })
