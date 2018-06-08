@@ -103,12 +103,14 @@ $(document).ready(() => {
         if(event.which == 13){
             event.preventDefault();
             addUser(event.target.value);
+            $('#add-user-input')[0].value = "";
         }
     });
 
     $('#add-user-btn').click((event) => {
         event.preventDefault();
         addUser($('#add-user-input').val());
+        $('#add-user-input')[0].value = "";
     });
 
     const selectUser = () => {
