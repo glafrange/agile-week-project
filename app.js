@@ -41,12 +41,7 @@ $(document).ready(() => {
                     url: url,
                     type: 'POST',
                     dataType: "jsonp",
-                    success: function(res) {
-                        let newStock = new Stock(stockInput, res.price, currentUser);
-                        stocks[stockInput] = newStock;
-                        displayStocks(stocks);
-                        console.log(stocks);
-                },
+                    success: (res) => addStocks(stockInput, res.price),
                     error: function(err){
                         console.log(err);
                         alert("We don't recognize this ticker symbol, please check your input and try again");
@@ -57,6 +52,15 @@ $(document).ready(() => {
             $('#stock-input').val('');
         }
     );
+
+    const addStocks = (stockInput, price) => {
+        let newStock = new Stock(stockInput, price, currentUser);
+        stocks[stockInput] = newStock;
+        users[currentUser].stocks[stockInput] = {ticker: stockInput, owned: false};
+        console.log("current users stocks: " + users[currentUser]);
+        displayStocks(stocks);
+        console.log(stocks);
+    };
     
 /*     $(function() {
     $('#stock-input').on("click",function() {
