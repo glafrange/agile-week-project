@@ -81,7 +81,7 @@ $(document).ready(() => {
         $("tbody").empty();
         for(let key in filteredStocks){
             if (!filteredStocks.hasOwnProperty(key)) continue;
-            let keyData = `<tr id=${key}>`;
+            let keyData = `<tr id=${key}><td align="center"><input type="checkbox" class="form-check-input" id="owned-toggle"></td>`;
         
             let obj = filteredStocks[key];
             for(let prop in obj) {
