@@ -1,11 +1,12 @@
 $(document).ready(() => {
 
     const stocks = {
-        XXXf: {ticker: 'XXXf', price: 1750, name: 'Chris'},
-        vvvf: {ticker: 'vvvf', price: 1139, name: 'Chris'},
-        rrrf: {ticker: 'rrrf', price: 540, name: 'Chris'},
-        qqqf: {ticker: 'qqqf', price: 666, name: 'Chris'},
-        ffff: {ticker: 'ffff', price: 666, name: 'Chris'}
+        // default data
+        // XXXf: {ticker: 'XXXf', price: 1750, name: 'Chris'},
+        // vvvf: {ticker: 'vvvf', price: 1139, name: 'Chris'},
+        // rrrf: {ticker: 'rrrf', price: 540, name: 'Chris'},
+        // qqqf: {ticker: 'qqqf', price: 666, name: 'Chris'},
+        // ffff: {ticker: 'ffff', price: 666, name: 'Chris'}
     };
 
     class Stock {
@@ -58,8 +59,8 @@ $(document).ready(() => {
         stocks[stockInput] = newStock;
         users[currentUser].stocks[stockInput] = {ticker: stockInput, owned: false};
         console.log("current users stocks: " + users[currentUser]);
-        displayStocks(stocks);
-        console.log(stocks);
+        displayStocks();
+        //console.log(stocks);
     };
     
 /*     $(function() {
@@ -73,13 +74,16 @@ $(document).ready(() => {
 }); */
 
     // Displays Stock 
-    const displayStocks = obj => {
+    const displayStocks = () => {
+        if(Object.keys(users).length === 0) return;
+        const filteredStocks = filterStocks();
+        Object.keys(filteredStocks).forEach((stock) => console.log(stock));
         $("tbody").empty();
-        for(let key in stocks){
-            if (!stocks.hasOwnProperty(key)) continue;
+        for(let key in filteredStocks){
+            if (!filteredStocks.hasOwnProperty(key)) continue;
             let keyData = `<tr id=${key}>`;
         
-            let obj = stocks[key];
+            let obj = filteredStocks[key];
             for(let prop in obj) {
                 if (!obj.hasOwnProperty(prop)) continue;
                  keyData += `<td>${obj[prop]}</td> `;
@@ -87,10 +91,19 @@ $(document).ready(() => {
             keyData += "</tr>";
             $("tbody").append(keyData );
         }
-        
     };
 
-    displayStocks(stocks);
+    const filterStocks = () => {
+        const userStocks = Object.keys(users[currentUser].stocks);
+        const filteredStockNames = Object.keys(stocks).filter((stockName) => {
+            return userStocks.includes(stockName);
+        });
+        const filteredStocks = {};
+        filteredStockNames.forEach((stockName) => {
+            filteredStocks[stockName] = stocks[stockName];
+        });
+        return filteredStocks;
+    };
 
     const users = {};
 
@@ -112,6 +125,7 @@ $(document).ready(() => {
         };
         $('#users-dropdown').append("<option value='" + userName + "'>" + userName + "</option>");
         currentUser = userName;
+        displayStocks();
         $('#users-dropdown')[0].options.selectedIndex = $('#users-dropdown')[0].options.length - 1;
         console.log(currentUser);
     };
@@ -133,6 +147,7 @@ $(document).ready(() => {
     const selectUser = () => {
         usersDropdown = $('#users-dropdown');
         currentUser = usersDropdown[0].options[usersDropdown[0].options.selectedIndex].value;
+        displayStocks();
         console.log("current user: " + currentUser);
     }
 
@@ -140,5 +155,6 @@ $(document).ready(() => {
         selectUser();
     });
 
+    displayStocks();
 });
 
