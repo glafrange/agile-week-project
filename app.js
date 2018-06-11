@@ -76,7 +76,8 @@ $(document).ready(() => {
     // Displays Stock 
     const displayStocks = () => {
         if(Object.keys(users).length === 0) return;
-        const filteredStocks = filterStocks();
+        let filteredStocks = filterStocks();
+        filteredStocks = filterOwned(filteredStocks);
         Object.keys(filteredStocks).forEach((stock) => console.log(stock));
         $("tbody").empty();
         for(let key in filteredStocks){
@@ -104,6 +105,40 @@ $(document).ready(() => {
         });
         return filteredStocks;
     };
+
+    let filterSettings = 'all';
+
+    const filterOwned = (stocks) => {
+        if (filterSettings === 'all') return stocks;
+        const filteredStockNames = Object.keys(stocks).filter((stockName) => {
+            const owned = users[currentUser].stocks[stockName].owned;
+            if (filterSettings === 'owned') return owned;
+            else if (filterSettings === 'unowned') return !owned;
+        });
+        const filteredStocks = {};
+        filteredStockNames.forEach((stockName) => {
+            filteredStocks[stockName] = stocks[stockName];
+        });
+        return filteredStocks;
+    };
+
+    // show all stocks
+    $('#show-all-btn').click((event) => {
+        filterSettings = 'all';
+        displayStocks();
+    });
+
+    // show only owned stocks
+    $('#show-owned-btn').click((event) => {
+        filterSettings = 'owned';
+        displayStocks();
+    });
+
+    // show only unowned stocks
+    $('#hide-owned-btn').click((event) => {
+        filterSettings = 'unowned';
+        displayStocks();
+    });
 
     const users = {};
 
