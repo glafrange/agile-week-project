@@ -98,7 +98,7 @@ $(document).ready(() => {
                 if (!obj.hasOwnProperty(prop)) continue;
                  keyData += `<td prop=${prop}>${obj[prop]}</td> `;
             }
-            keyData += `<td align="center"><button id='delStocks' type="button">Thing </button>`;
+            keyData += `<td align="center"><button class='delStocks' type="button">Delete </button></td>`;
             keyData += "</tr>";
             $("tbody").append(keyData );
             $("tbody tr:last-child").hide();
