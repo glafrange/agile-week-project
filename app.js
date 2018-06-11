@@ -149,7 +149,6 @@ $(document).ready(() => {
         displayStocks();
     });
 
-<<<<<<< HEAD
     // toggle owned stocks
     const addOwnedToggleListener = () => {
         $('#owned-toggle').on('click', (event) => {
@@ -158,8 +157,6 @@ $(document).ready(() => {
             users[currentUser].stocks[stockName].owned = checked;
         });
     }
-=======
->>>>>>> 95ec59497942d73083a2ab55b1bfd35f5f25f72e
 
     const users = {};
 
