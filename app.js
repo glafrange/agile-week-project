@@ -73,7 +73,7 @@ $(document).ready(() => {
     };
     
     const delStocks = () =>{     
-    $('#delStocks').click(function(event){
+    $('.delStocks').click(function(event){
     var stockName = $(event.target).closest('tr').find("[prop='ticker']").html();
     delete stocks[stockName];
     console.log(stockName);
@@ -98,7 +98,11 @@ $(document).ready(() => {
                 if (!obj.hasOwnProperty(prop)) continue;
                  keyData += `<td prop=${prop}>${obj[prop]}</td> `;
             }
+<<<<<<< HEAD
             keyData += `<td align="center"><button class='delStocks' type="button">Delete </button></td>`;
+=======
+            keyData += `<td align="center"><button class='delStocks' type="button">Thing </button></td>`;
+>>>>>>> b534da760d130bae926c8bf9c1a8b52001af6081
             keyData += "</tr>";
             $("tbody").append(keyData );
             $("tbody tr:last-child").hide();

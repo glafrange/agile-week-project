@@ -63,3 +63,9 @@ input[type=text]:focus
     color:dodgerBlue;
 }
   
+td {
+  background-color: white;
+  color: black;
+  opacity: .7;
+  border: .5px solid black;
+}
