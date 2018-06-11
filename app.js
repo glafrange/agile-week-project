@@ -98,13 +98,17 @@ $(document).ready(() => {
                 if (!obj.hasOwnProperty(prop)) continue;
                  keyData += `<td prop=${prop}>${obj[prop]}</td> `;
             }
-            keyData += `<td align="center"><button class='delStocks' type="button">Thing </button></td>`;
+            keyData += `<td align="center"><button class='delStocks' type="button">Delete</button></td>`;
             keyData += "</tr>";
             $("tbody").append(keyData );
             $("tbody tr:last-child").hide();
             $("tbody tr:last-child").fadeIn(1200);
+
+            const owned = users[currentUser].stocks[key].owned;
+            $("tbody tr:last-child #owned-toggle")[0].checked = owned;
+
+            addOwnedToggleListener();
             delStocks();
-            
         }
 
         console.log(sortStocks(filteredStocks));
