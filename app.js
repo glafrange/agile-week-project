@@ -44,6 +44,7 @@ $(document).ready(() => {
                     url: url,
                     type: 'POST',
                     dataType: "jsonp",
+              
                     success: (res) => addStocks(stockInput, res.price),
                     error: function(err){
                         console.log(err);
@@ -71,6 +72,17 @@ $(document).ready(() => {
         displayStocks();
     };
     
+    const things = () =>{     
+    $('#delete').click(function(event){
+    $(event.target).closest('tr').remove(); 
+});
+};
+
+
+
+
+
+
 
     // Displays Stock 
     const displayStocks = () => {
@@ -81,20 +93,20 @@ $(document).ready(() => {
         for(let key in filteredStocks){
             if (!filteredStocks.hasOwnProperty(key)) continue;
             let keyData = `<tr id=${key}><td align="center"><input type="checkbox" class="form-check-input" id="owned-toggle"></td>`;
+             
         
             let obj = filteredStocks[key];
             for(let prop in obj) {
                 if (!obj.hasOwnProperty(prop)) continue;
                  keyData += `<td prop=${prop}>${obj[prop]}</td> `;
             }
+            keyData += `<td align="center"><button id='things' type="button">Thing </button>`;
             keyData += "</tr>";
             $("tbody").append(keyData );
             $("tbody tr:last-child").hide();
             $("tbody tr:last-child").fadeIn(1200);
+            things();
             
-            $("tbody tr:last-child #owned-toggle")[0].checked = users[currentUser].stocks[key].owned;
-            
-            addOwnedToggleListener();
         }
 
         console.log(sortStocks(filteredStocks));
