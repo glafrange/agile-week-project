@@ -1,3 +1,10 @@
+/*global $*/
+$('body').hide();
+$('#content').hide();
+$('body').fadeIn(1800);
+$('#Favorite').hide();
+$('#Favorite').fadeIn(3000);
+
 $(document).ready(() => {
 
     const stocks = {
@@ -31,6 +38,8 @@ $(document).ready(() => {
   $('[data-toggle="tooltip"]').tooltip()
 });
 
+
+
     // Gets form input value, current user, and stock price from API, 
     // saves as an object and pushes to the stock array
     $('#add-stock-btn').click(() => {
@@ -46,7 +55,14 @@ $(document).ready(() => {
                     error: function(err){
                         console.log(err);
                         alert("We don't recognize this ticker symbol, please check your input and try again");
-                    }
+                    },
+                    complete: function(){
+                        $('.loading').hide();
+                        $('#Favorite').fadeIn(1200);
+                        $('#content').fadeIn(1400)
+    
+}
+                    
                 });
             };
             callAPI();
@@ -72,6 +88,13 @@ $(document).ready(() => {
         $("#content").prepend(li); 
     });
 }); */
+
+
+
+
+
+
+
 
     // Displays Stock 
     const displayStocks = () => {
