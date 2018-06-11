@@ -7,14 +7,7 @@ $('#Favorite').fadeIn(3000);
 
 $(document).ready(() => {
 
-    const stocks = {
-        // default data
-        // XXXf: {ticker: 'XXXf', price: 1750, name: 'Chris'},
-        // vvvf: {ticker: 'vvvf', price: 1139, name: 'Chris'},
-        // rrrf: {ticker: 'rrrf', price: 540, name: 'Chris'},
-        // qqqf: {ticker: 'qqqf', price: 666, name: 'Chris'},
-        // ffff: {ticker: 'ffff', price: 666, name: 'Chris'}
-    };
+    const stocks = {};
 
     class Stock {
         constructor(ticker, price, name) {
@@ -23,6 +16,7 @@ $(document).ready(() => {
             this.name = name;
         }
     }
+
 
     // Allows Enter key to submit
     $('#stock-input').keypress((event) => {
@@ -35,9 +29,8 @@ $(document).ready(() => {
     
     // ToolTip Function 
     $(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-});
-
+        $('[data-toggle="tooltip"]').tooltip()
+    });
 
 
     // Gets form input value, current user, and stock price from API, 
@@ -61,8 +54,7 @@ $(document).ready(() => {
                         $('#Favorite').fadeIn(2000);
                         $('#content').fadeIn(1200);
     
-}
-                    
+                    }   
                 });
             };
             callAPI();
@@ -70,31 +62,16 @@ $(document).ready(() => {
         }
     );
 
+
+    // Add stock 
     const addStocks = (stockInput, price) => {
         let newStock = new Stock(stockInput, price, currentUser);
         stocks[stockInput] = newStock;
         users[currentUser].stocks[stockInput] = {ticker: stockInput, owned: false};
         console.log("current users stocks: " + users[currentUser]);
         displayStocks();
-        //console.log(stocks);
     };
     
-/*     $(function() {
-    $('#stock-input').on("click",function() {
-        const text = $("stock-input").val();   //getting value of text input element
-        const item = $('<li/>')
-          .text(text)
-          .on("click",function() { $(this).remove()});
-        $("#content").prepend(li); 
-    });
-}); */
-
-
-
-
-
-
-
 
     // Displays Stock 
     const displayStocks = () => {
@@ -118,8 +95,12 @@ $(document).ready(() => {
             $("tbody tr:last-child").fadeIn(1200);
         }
 
+        console.log(sortStocks(filteredStocks));
+
     };
 
+
+    // Filter
     const filterStocks = () => {
         const userStocks = Object.keys(users[currentUser].stocks);
         const filteredStockNames = Object.keys(stocks).filter((stockName) => {
@@ -132,7 +113,9 @@ $(document).ready(() => {
         return filteredStocks;
     };
 
+
     let filterSettings = 'all';
+
 
     const filterOwned = (stocks) => {
         if (filterSettings === 'all') return stocks;
@@ -147,6 +130,7 @@ $(document).ready(() => {
         });
         return filteredStocks;
     };
+
 
     // show all stocks
     $('#show-all-btn').click((event) => {
@@ -165,6 +149,7 @@ $(document).ready(() => {
         filterSettings = 'unowned';
         displayStocks();
     });
+
 
     const users = {};
 
@@ -217,6 +202,41 @@ $(document).ready(() => {
     });
 
     displayStocks();
+
+
+    const sortStocks = (obj) => {
+
+        // Send objects into an array
+        let stockArray = Object.keys(obj).map(i => {
+            let stockObj = stocks[i];
+            return stockObj;
+        });
+        
+        // Sort the array by prop and direction
+        function sortBy(array, prop, direction){  
+            
+            array.sort((a,b) => {
+                if (a[prop] < b[prop]) {
+                    return -1;
+                }
+                if (a[prop] > b[prop]) {
+                    return 1;
+                }
+                return 0;
+            });
+            
+            if (direction === 'dsc') {
+                array.reverse();
+            }
+
+            return array;
+        }
+
+        let sorted = sortBy(stockArray, 'price', 'dsc');
+        return sorted;
+    }; 
+        
+        
 });
 
 
