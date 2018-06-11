@@ -74,7 +74,6 @@ $(document).ready(() => {
         let newStock = new Stock(stockInput, price, currentUser);
         stocks[stockInput] = newStock;
         users[currentUser].stocks[stockInput] = {ticker: stockInput, owned: false};
-        console.log("current users stocks: " + users[currentUser]);
         displayStocks();
         //console.log(stocks);
     };
@@ -101,7 +100,6 @@ $(document).ready(() => {
         if(Object.keys(users).length === 0) return;
         let filteredStocks = filterStocks();
         filteredStocks = filterOwned(filteredStocks);
-        Object.keys(filteredStocks).forEach((stock) => console.log(stock));
         $("tbody").empty();
         for(let key in filteredStocks){
             if (!filteredStocks.hasOwnProperty(key)) continue;
@@ -110,12 +108,13 @@ $(document).ready(() => {
             let obj = filteredStocks[key];
             for(let prop in obj) {
                 if (!obj.hasOwnProperty(prop)) continue;
-                 keyData += `<td>${obj[prop]}</td> `;
+                 keyData += `<td prop=${prop}>${obj[prop]}</td> `;
             }
             keyData += "</tr>";
             $("tbody").append(keyData );
             $("tbody tr:last-child").hide();
             $("tbody tr:last-child").fadeIn(1200);
+            addOwnedToggleListener();
         }
 
     };
@@ -166,6 +165,15 @@ $(document).ready(() => {
         displayStocks();
     });
 
+    // toggle owned stocks
+    const addOwnedToggleListener = () => {
+        $('#owned-toggle').on('click', (event) => {
+            const checked = $(event.target)[0].checked;
+            const stockName = $(event.target).closest('tr').find("[prop='ticker']").html();
+            users[currentUser].stocks[stockName].owned = checked;
+        });
+    }
+
     const users = {};
 
     let currentUser = null;
@@ -188,7 +196,6 @@ $(document).ready(() => {
         currentUser = userName;
         displayStocks();
         $('#users-dropdown')[0].options.selectedIndex = $('#users-dropdown')[0].options.length - 1;
-        console.log(currentUser);
     };
 
     $('#add-user-input').keypress((event) => {
