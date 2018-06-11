@@ -38,12 +38,12 @@ $(document).ready(() => {
   $('[data-toggle="tooltip"]').tooltip()
 });
 
-    $('#content').on("click",function(event)
-    {
-        if (confirm("Do you want to delete")==true)
-    {
-        
+    table.addEventListener('click', (e) => {
+    if(e.target.className == '91'){
+      const td = e.target.parentElement;
+      td.parentNode.removeChild(td);
     }
+  });
 
 
 
