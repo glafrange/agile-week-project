@@ -38,6 +38,13 @@ $(document).ready(() => {
   $('[data-toggle="tooltip"]').tooltip()
 });
 
+    $('#content').on("click",function(event)
+    {
+        if (confirm("Do you want to delete")==true)
+    {
+        
+    }
+
 
 
     // Gets form input value, current user, and stock price from API, 
@@ -51,6 +58,7 @@ $(document).ready(() => {
                     url: url,
                     type: 'POST',
                     dataType: "jsonp",
+              
                     success: (res) => addStocks(stockInput, res.price),
                     error: function(err){
                         console.log(err);
@@ -79,15 +87,7 @@ $(document).ready(() => {
         //console.log(stocks);
     };
     
-/*     $(function() {
-    $('#stock-input').on("click",function() {
-        const text = $("stock-input").val();   //getting value of text input element
-        const item = $('<li/>')
-          .text(text)
-          .on("click",function() { $(this).remove()});
-        $("#content").prepend(li); 
-    });
-}); */
+    $()
 
 
 
@@ -112,6 +112,7 @@ $(document).ready(() => {
                 if (!obj.hasOwnProperty(prop)) continue;
                  keyData += `<td>${obj[prop]}</td> `;
             }
+            keyData += `<button id="delete" type="button">Thing </button>`;
             keyData += "</tr>";
             $("tbody").append(keyData );
         }
