@@ -38,13 +38,7 @@ $(document).ready(() => {
   $('[data-toggle="tooltip"]').tooltip()
 });
 
-    table.addEventListener('click', (e) => {
-    if(e.target.className == '91'){
-      const td = e.target.parentElement;
-      td.parentNode.removeChild(td);
-    }
-  });
-
+    
 
 
     // Gets form input value, current user, and stock price from API, 
@@ -87,8 +81,11 @@ $(document).ready(() => {
         //console.log(stocks);
     };
     
-    $()
-
+    const things = () =>{     
+    $('#delete').click(function(event){
+    $(event.target).closest('tr').remove(); 
+});
+};
 
 
 
@@ -106,17 +103,20 @@ $(document).ready(() => {
         for(let key in filteredStocks){
             if (!filteredStocks.hasOwnProperty(key)) continue;
             let keyData = `<tr id=${key}><td align="center"><input type="checkbox" class="form-check-input" id="owned-toggle"></td>`;
+             
         
             let obj = filteredStocks[key];
             for(let prop in obj) {
                 if (!obj.hasOwnProperty(prop)) continue;
                  keyData += `<td>${obj[prop]}</td> `;
             }
-            keyData += `<button id="delete" type="button">Thing </button>`;
+            keyData += `<td align="center"><button id='things' type="button">Thing </button>`;
             keyData += "</tr>";
             $("tbody").append(keyData );
             $("tbody tr:last-child").hide();
             $("tbody tr:last-child").fadeIn(1200);
+            things();
+            
         }
 
     };
