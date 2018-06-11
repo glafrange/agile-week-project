@@ -85,6 +85,8 @@ $(document).ready(() => {
     $('#delStocks').click(function(event){
     var stockName = $(event.target).closest('tr').find("[prop='ticker']").html();
     delete stocks[stockName];
+    console.log(stockName);
+    console.log(stocks);
     displayStocks();
     
 });
