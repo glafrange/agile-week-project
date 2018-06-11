@@ -81,18 +81,14 @@ $(document).ready(() => {
         //console.log(stocks);
     };
     
-    const things = () =>{     
-    $('#delete').click(function(event){
-    $(event.target).closest('tr').remove(); 
+    const delStocks = () =>{     
+    $('#delStocks').click(function(event){
+    var stockName = $(event.target).closest('tr').find("[prop='ticker']").html();
+    delete stocks[stockName];
+    displayStocks();
+    
 });
 };
-
-
-
-
-
-
-
     // Displays Stock 
     const displayStocks = () => {
         if(Object.keys(users).length === 0) return;
@@ -110,12 +106,12 @@ $(document).ready(() => {
                 if (!obj.hasOwnProperty(prop)) continue;
                  keyData += `<td>${obj[prop]}</td> `;
             }
-            keyData += `<td align="center"><button id='things' type="button">Thing </button>`;
+            keyData += `<td align="center"><button id='delStocks' type="button">Thing </button>`;
             keyData += "</tr>";
             $("tbody").append(keyData );
             $("tbody tr:last-child").hide();
             $("tbody tr:last-child").fadeIn(1200);
-            things();
+            delStocks();
             
         }
 
