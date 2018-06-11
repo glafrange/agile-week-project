@@ -91,6 +91,9 @@ $(document).ready(() => {
             $("tbody").append(keyData );
             $("tbody tr:last-child").hide();
             $("tbody tr:last-child").fadeIn(1200);
+            
+            $("tbody tr:last-child #owned-toggle")[0].checked = users[currentUser].stocks[key].owned;
+            
             addOwnedToggleListener();
         }
 
@@ -155,6 +158,7 @@ $(document).ready(() => {
             const checked = $(event.target)[0].checked;
             const stockName = $(event.target).closest('tr').find("[prop='ticker']").html();
             users[currentUser].stocks[stockName].owned = checked;
+            displayStocks();
         });
     }
 
