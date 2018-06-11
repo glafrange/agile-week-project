@@ -59,7 +59,7 @@ $(document).ready(() => {
                     complete: function(){
                         $('.loading').hide();
                         $('#Favorite').fadeIn(2000);
-                        $('#content').fadeIn(1200)
+                        $('#content').fadeIn(1200);
     
 }
                     
@@ -114,7 +114,10 @@ $(document).ready(() => {
             }
             keyData += "</tr>";
             $("tbody").append(keyData );
+            $("tbody tr:last-child").hide();
+            $("tbody tr:last-child").fadeIn(1200);
         }
+
     };
 
     const filterStocks = () => {
