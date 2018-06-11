@@ -1,7 +1,7 @@
 /*global $*/
 $('body').hide();
 $('#content').hide();
-$('body').fadeIn(1800);
+$('body').fadeIn(2000);
 $('#Favorite').hide();
 $('#Favorite').fadeIn(3000);
 
@@ -58,8 +58,8 @@ $(document).ready(() => {
                     },
                     complete: function(){
                         $('.loading').hide();
-                        $('#Favorite').fadeIn(1200);
-                        $('#content').fadeIn(1400)
+                        $('#Favorite').fadeIn(2000);
+                        $('#content').fadeIn(1200)
     
 }
                     
