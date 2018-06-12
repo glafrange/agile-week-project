@@ -90,7 +90,7 @@ $(document).ready(() => {
         $("tbody").empty();
         for(let key in filteredStocks){
             if (!filteredStocks.hasOwnProperty(key)) continue;
-            let keyData = `<tr id=${key}><td align="center"><input type="checkbox" class="form-check-input" id="owned-toggle"></td>`;
+            let keyData = `<tr id=${key}><td align="center"><input type="checkbox" class="form-check-input owned-toggle"></td>`;
              
         
             let obj = filteredStocks[key];
@@ -105,13 +105,11 @@ $(document).ready(() => {
             $("tbody tr:last-child").fadeIn(1200);
 
             const owned = users[currentUser].stocks[key].owned;
-            $("tbody tr:last-child #owned-toggle")[0].checked = owned;
-
-            addOwnedToggleListener();
-            delStocks();
+            $("tbody tr:last-child .owned-toggle")[0].checked = owned;
         }
-
-        console.log(sortStocks(filteredStocks));
+        addOwnedToggleListener();
+        delStocks();
+        //console.log(sortStocks(filteredStocks));
 
     };
 
@@ -168,10 +166,11 @@ $(document).ready(() => {
 
     // toggle owned stocks
     const addOwnedToggleListener = () => {
-        $('#owned-toggle').on('click', (event) => {
+        $('.owned-toggle').on('click', (event) => {
             const checked = $(event.target)[0].checked;
             const stockName = $(event.target).closest('tr').find("[prop='ticker']").html();
             users[currentUser].stocks[stockName].owned = checked;
+            console.log(users[currentUser].stocks[stockName].owned);
             displayStocks();
         });
     }
@@ -218,7 +217,6 @@ $(document).ready(() => {
         usersDropdown = $('#users-dropdown');
         currentUser = usersDropdown[0].options[usersDropdown[0].options.selectedIndex].value;
         displayStocks();
-        console.log("current user: " + currentUser);
     }
 
     $('#users-dropdown').on('change', (event) => {
