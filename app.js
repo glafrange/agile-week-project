@@ -1,13 +1,13 @@
 /*global $*/
 $('body').hide();
-$('#content').hide();
 $('body').fadeIn(2000);
 $('#Favorite').hide();
 $('#Favorite').fadeIn(3000);
 
 $(document).ready(() => {
+    
 
-    const stocks = {};
+    let stocks = {};
 
     class Stock {
         constructor(ticker, price, name) {
@@ -51,9 +51,9 @@ $(document).ready(() => {
                         alert("We don't recognize this ticker symbol, please check your input and try again");
                     },
                     complete: function(){
-                        $('.loading').hide();
-                        $('#Favorite').fadeIn(2000);
-                        $('#content').fadeIn(1200);
+                        // $('.loading').hide();
+                        // $('#Favorite').fadeIn(2000);
+                        // $('#content').fadeIn(1200);
     
                     }   
                 });
@@ -73,20 +73,21 @@ $(document).ready(() => {
     };
     
     const delStocks = () =>{     
-    $('.delStocks').click(function(event){
-    var stockName = $(event.target).closest('tr').find("[prop='ticker']").html();
-    delete stocks[stockName];
-    console.log(stockName);
-    console.log(stocks);
-    displayStocks();
-    
-});
-};
-    // Displays Stock 
+        $('.delStocks').click(function(event){
+            var stockName = $(event.target).closest('tr').find("[prop='ticker']").html();
+            delete stocks[stockName];
+            console.log(stockName);
+            console.log(stocks);
+            displayStocks();   
+        });
+    };
+    // Displays Stocks
     const displayStocks = () => {
         if(Object.keys(users).length === 0) return;
+        if(Object.keys(stocks).length === 0) return;
         let filteredStocks = filterStocks();
         filteredStocks = filterOwned(filteredStocks);
+        //console.log(filteredStocks);
         $("tbody").empty();
         for(let key in filteredStocks){
             if (!filteredStocks.hasOwnProperty(key)) continue;
@@ -109,8 +110,9 @@ $(document).ready(() => {
         }
         addOwnedToggleListener();
         delStocks();
-        //console.log(sortStocks(filteredStocks));
+        setCookies('stocks');
 
+        
     };
 
 
@@ -175,7 +177,7 @@ $(document).ready(() => {
         });
     }
 
-    const users = {};
+    let users = {};
 
     let currentUser = null;
     
@@ -195,8 +197,16 @@ $(document).ready(() => {
         };
         $('#users-dropdown').append("<option value='" + userName + "'>" + userName + "</option>");
         currentUser = userName;
-        displayStocks();
         $('#users-dropdown')[0].options.selectedIndex = $('#users-dropdown')[0].options.length - 1;
+        setCookies('users');
+        displayStocks();
+    };
+
+    const loadUsers = () => {
+        Object.keys(users).forEach(userName => {
+            $('#users-dropdown').append("<option value='" + userName + "'>" + userName + "</option>");
+        });
+        selectUserByUserName(currentUser);
     };
 
     $('#add-user-input').keypress((event) => {
@@ -219,11 +229,16 @@ $(document).ready(() => {
         displayStocks();
     }
 
+    const selectUserByUserName = (userName) => {
+        $('#users-dropdown')[0].options.selectedIndex = Array.from($('#users-dropdown')[0].options).map((item) => {
+            return item.value;
+        }).indexOf(userName);
+    }
+
     $('#users-dropdown').on('change', (event) => {
         selectUser();
     });
 
-    displayStocks();
 
 
     const sortStocks = (obj) => {
@@ -257,8 +272,46 @@ $(document).ready(() => {
         let sorted = sortBy(stockArray, 'price', 'dsc');
         return sorted;
     }; 
+    
+    const setCookies = (type) => {
+        usersJSON = JSON.stringify(users);
+        stocksJSON = JSON.stringify(stocks);
+        currentUserJSON = JSON.stringify(currentUser);
         
-        
+        $.cookie('users', usersJSON);
+        $.cookie('stocks', stocksJSON);
+        $.cookie('currentUser', currentUserJSON);
+    }
+
+    const loadCookies = () => {
+        if ($.cookie('users')) {
+            users = JSON.parse($.cookie('users'));
+            console.log(users);
+        }
+        if ($.cookie('currentUser')) {
+            currentUser = JSON.parse($.cookie('currentUser'));
+            console.log("currentusercookie:" + JSON.parse($.cookie('currentUser')));
+        }
+        if ($.cookie('stocks')) {
+            stocks = JSON.parse($.cookie('stocks'));
+            console.log(stocks);
+        }
+
+        // $('body').hide();
+        // $('#content').hide();
+        // $('body').fadeIn(2000);
+        // $('#Favorite').hide();
+        // $('#Favorite').fadeIn(3000);
+    }
+
+    loadCookies();
+    loadUsers();
+    displayStocks();
+    //displayStocks();
+    // setTimeout(() => {
+    //     displayStocks();
+    // }, 1000);
+    
 });
 
 
