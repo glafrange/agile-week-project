@@ -26,6 +26,12 @@
                 <button type="button" title="Show-Owned" data-toggle="tooltip" id="show-owned-btn">only owned</button>
                 <button type="button" title="Hide-Owned" data-toggle="tooltip" id="hide-owned-btn">only unowned</button>
                 <input type="text" id="searchList" placeholder="Search for a stock" />
+                <select id="sort-list">
+                    <option value="ticker-a">TICKER: A-Z</option>
+                    <option value="ticker-z">TICKER: Z-A</option>
+                    <option value="price-high">PRICE: High - Low</option>
+                    <option value="price-low">PRICE: Low - High</option>
+                </select>
                 
             </form>
         </div>
@@ -53,7 +59,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
+    <script src="jquery.cookie.js"></script>
     <script src="app.js"></script>
 </body>
-</html> 
+</html>
