@@ -76,20 +76,23 @@ $(document).ready(() => {
         $('.delStocks').click(function(event){
             var stockName = $(event.target).closest('tr').find("[prop='ticker']").html();
             delete stocks[stockName];
+            delete users[currentUser].stocks[stockName];
             console.log(stockName);
             console.log(stocks);
             displayStocks();   
         });
     };
+
     // Displays Stocks
     const displayStocks = () => {
+        $("tbody").empty();
+
         if(Object.keys(users).length === 0) return;
         if(Object.keys(stocks).length === 0) return;
         let filteredStocks = filterStocks();
         filteredStocks = filterOwned(filteredStocks);
         let sortedStocks = sortBy(Object.values(filteredStocks), currentSortProp, currentSortDirection);
 
-        $("tbody").empty();
         for(let stock of sortedStocks){
             //if (!filteredStocks.hasOwnProperty(key)) continue;
             let stockData = `<tr id=${stock.ticker}><td align="center"><input type="checkbox" class="form-check-input owned-toggle"></td>`;
@@ -113,7 +116,6 @@ $(document).ready(() => {
         delStocks();
         setCookies('stocks');
 
-        
     };
 
 
@@ -272,13 +274,13 @@ $(document).ready(() => {
         usersDropdown = $('#users-dropdown');
         currentUser = usersDropdown[0].options[usersDropdown[0].options.selectedIndex].value;
         displayStocks();
-    }
+    };
 
     const selectUserByUserName = (userName) => {
         $('#users-dropdown')[0].options.selectedIndex = Array.from($('#users-dropdown')[0].options).map((item) => {
             return item.value;
         }).indexOf(userName);
-    }
+    };
 
     $('#users-dropdown').on('change', (event) => {
         selectUser();
@@ -293,7 +295,7 @@ $(document).ready(() => {
         $.cookie('users', usersJSON);
         $.cookie('stocks', stocksJSON);
         $.cookie('currentUser', currentUserJSON);
-    }
+    };
 
     const loadCookies = () => {
         if ($.cookie('users')) {
@@ -308,21 +310,10 @@ $(document).ready(() => {
             stocks = JSON.parse($.cookie('stocks'));
             console.log(stocks);
         }
-
-        // $('body').hide();
-        // $('#content').hide();
-        // $('body').fadeIn(2000);
-        // $('#Favorite').hide();
-        // $('#Favorite').fadeIn(3000);
-    }
+    };
 
     loadCookies();
     loadUsers();
-    displayStocks();
-    //displayStocks();
-    // setTimeout(() => {
-    //     displayStocks();
-    // }, 1000);
     
 });
 
