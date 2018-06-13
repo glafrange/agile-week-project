@@ -87,6 +87,59 @@ $(document).ready(() => {
         if(Object.keys(users).length === 0) return;
         let filteredStocks = filterStocks();
         filteredStocks = filterOwned(filteredStocks);
+
+        let stockArray = Object.keys(filteredStocks).map(i => {
+            let stockObj = stocks[i];
+            return stockObj;
+        });
+        
+        // Sort the array by prop and direction
+        function sortBy(array, prop, direction){  
+            
+            array.sort((a,b) => {
+                if (a[prop] < b[prop]) {
+                    return -1;
+                }
+                if (a[prop] > b[prop]) {
+                    return 1;
+                }
+                return 0;
+            });
+            
+            if (direction === 'dsc') {
+                array.reverse();
+            }
+
+            return array;
+        }
+
+
+        $('#sort-list').on('change', function() {
+            let current = $(this).val();
+            let goodStocks;
+            if (current === "ticker-a" ){
+                 goodStocks = sortBy(stockArray, 'ticker');
+
+            } else if (current === "ticker-z"){
+                 goodStocks = sortBy(stockArray, 'ticker', 'dsc');
+
+            } else if (current === "price-high"){
+                 goodStocks = sortBy(stockArray, 'price', 'dsc');
+                
+            } else if (current === "price-low"){
+                 goodStocks = sortBy(stockArray, 'price');
+                
+            }
+
+            $("tbody").empty();
+            goodStocks.forEach((stock,i) => {
+                $("tbody").append(`<tr id=${i}><td align="center"><input type="checkbox" class="form-check-input owned-toggle"></td><td>${stock.ticker}</td><td>${stock.price}</td><td align="center"><button class='delStocks' type="button">Delete</button></td></tr>`)
+            })
+            delStocks();
+        })  
+      
+
+
         $("tbody").empty();
         for(let key in filteredStocks){
             if (!filteredStocks.hasOwnProperty(key)) continue;
@@ -110,6 +163,8 @@ $(document).ready(() => {
         addOwnedToggleListener();
         delStocks();
         //console.log(sortStocks(filteredStocks));
+
+
 
     };
 
@@ -226,39 +281,13 @@ $(document).ready(() => {
     displayStocks();
 
 
-    const sortStocks = (obj) => {
+
 
         // Send objects into an array
-        let stockArray = Object.keys(obj).map(i => {
-            let stockObj = stocks[i];
-            return stockObj;
-        });
+       
+       
         
-        // Sort the array by prop and direction
-        function sortBy(array, prop, direction){  
-            
-            array.sort((a,b) => {
-                if (a[prop] < b[prop]) {
-                    return -1;
-                }
-                if (a[prop] > b[prop]) {
-                    return 1;
-                }
-                return 0;
-            });
-            
-            if (direction === 'dsc') {
-                array.reverse();
-            }
-
-            return array;
-        }
-
-        let sorted = sortBy(stockArray, 'price', 'dsc');
-        return sorted;
-    }; 
-        
-        
+   
 });
 
 
