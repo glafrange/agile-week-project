@@ -87,77 +87,26 @@ $(document).ready(() => {
         if(Object.keys(stocks).length === 0) return;
         let filteredStocks = filterStocks();
         filteredStocks = filterOwned(filteredStocks);
-
-        let stockArray = Object.keys(filteredStocks).map(i => {
-            let stockObj = stocks[i];
-            return stockObj;
-        });
-        
-        // Sort the array by prop and direction
-        function sortBy(array, prop, direction){  
-            
-            array.sort((a,b) => {
-                if (a[prop] < b[prop]) {
-                    return -1;
-                }
-                if (a[prop] > b[prop]) {
-                    return 1;
-                }
-                return 0;
-            });
-            
-            if (direction === 'dsc') {
-                array.reverse();
-            }
-
-            return array;
-        }
-
-
-        $('#sort-list').on('change', function() {
-            let current = $(this).val();
-            let goodStocks;
-            if (current === "ticker-a" ){
-                 goodStocks = sortBy(stockArray, 'ticker');
-
-            } else if (current === "ticker-z"){
-                 goodStocks = sortBy(stockArray, 'ticker', 'dsc');
-
-            } else if (current === "price-high"){
-                 goodStocks = sortBy(stockArray, 'price', 'dsc');
-                
-            } else if (current === "price-low"){
-                 goodStocks = sortBy(stockArray, 'price');
-                
-            }
-
-            $("tbody").empty();
-            goodStocks.forEach((stock,i) => {
-                $("tbody").append(`<tr id=${i}><td align="center"><input type="checkbox" class="form-check-input owned-toggle"></td><td>${stock.ticker}</td><td>${stock.price}</td><td>${stock.name}</td><td align="center"><button class='delStocks' type="button">Delete</button></td></tr>`)
-            })
-            delStocks();
-        })  
-      
-
+        let sortedStocks = sortBy(Object.values(filteredStocks), currentSortProp, currentSortDirection);
 
         $("tbody").empty();
-        for(let key in filteredStocks){
-            if (!filteredStocks.hasOwnProperty(key)) continue;
-            let keyData = `<tr id=${key}><td align="center"><input type="checkbox" class="form-check-input owned-toggle"></td>`;
+        for(let stock of sortedStocks){
+            //if (!filteredStocks.hasOwnProperty(key)) continue;
+            let stockData = `<tr id=${stock.ticker}><td align="center"><input type="checkbox" class="form-check-input owned-toggle"></td>`;
              
         
-            let obj = filteredStocks[key];
-            for(let prop in obj) {
-                if (!obj.hasOwnProperty(prop)) continue;
-                 keyData += `<td prop=${prop}>${obj[prop]}</td> `;
+            //let obj = sortedStocks[key];
+            for(let prop in stock) {
+                if (!stock.hasOwnProperty(prop)) continue;
+                stockData += `<td prop=${prop}>${stock[prop]}</td> `;
             }
-            keyData += `<td align="center"><button class='delStocks' type="button">Delete</button></td>`;
-            keyData += "</tr>";
-            $("tbody").append(keyData );
+            stockData += `<td align="center"><button class='delStocks' type="button">Delete</button></td>`;
+            stockData += "</tr>";
+            $("tbody").append(stockData );
             $("tbody tr:last-child").hide();
             $("tbody tr:last-child").fadeIn(1200);
 
-            const owned = users[currentUser].stocks[key].owned;
+            const owned = users[currentUser].stocks[stock.ticker].owned;
             $("tbody tr:last-child .owned-toggle")[0].checked = owned;
         }
         addOwnedToggleListener();
@@ -227,7 +176,51 @@ $(document).ready(() => {
             console.log(users[currentUser].stocks[stockName].owned);
             displayStocks();
         });
+    };
+    
+    // Sort the array by prop and direction
+    function sortBy(array, prop, direction){  
+        
+        array.sort((a,b) => {
+            if (a[prop] < b[prop]) {
+                return -1;
+            }
+            if (a[prop] > b[prop]) {
+                return 1;
+            }
+            return 0;
+        });
+        
+        if (direction === 'dsc') {
+            array.reverse();
+        }
+
+        return array;
     }
+
+    // Sort settings
+    let currentSortProp = 'ticker';
+    let currentSortDirection = 'dsc';
+
+    // Event handler to set sort settings for the display function
+    $('#sort-list').on('change', function() {
+        let current = $(this).val();
+        if (current === "ticker-a" ){
+            currentSortProp = 'ticker';
+            currentSortDirection = 'asc';
+        } else if (current === "ticker-z"){
+            currentSortProp = 'ticker';
+            currentSortDirection = 'dsc';
+        } else if (current === "price-high"){
+            currentSortProp = 'price';
+            currentSortDirection = 'dsc';
+        } else if (current === "price-low"){
+            currentSortProp = 'price';
+            currentSortDirection = 'asc';
+        }
+
+        displayStocks();
+    }); 
 
     let users = {};
 
