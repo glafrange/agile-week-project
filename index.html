@@ -20,6 +20,26 @@
                 <input type="text" id="add-user-input" placeholder="Your name"/><i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
                 <button type="button" title="Add User" data-toggle="tooltip" id="add-user-btn">Add User</button>
                 <select id="users-dropdown"></select>
+                <button type="button" title="Deposit Funds" data-toggle="modal" data-target="#deposit-modal" id="deposit-funds-btn">Deposit Funds</button>
+                <div class="modal" id="deposit-modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                    <div class="modal-dialogue" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Deposit Funds</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <input id="deposit-input" placeholder="Enter amount of funds to deposit"/>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <input type="text" id="stock-input" placeholder="Add a stock" />
                 <button type="button" title="Add-Stock" data-toggle="tooltip" id="add-stock-btn">Submit</button>
                 <button type="button" title="Show-All" data-toggle="tooltip" id="show-all-btn">Show all</button>

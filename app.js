@@ -240,7 +240,8 @@ $(document).ready(() => {
         }
         users[userName] = {
             name: userName,
-            stocks: {}
+            stocks: {},
+            funds: 0
         };
         $('#users-dropdown').append("<option value='" + userName + "'>" + userName + "</option>");
         currentUser = userName;
@@ -273,6 +274,7 @@ $(document).ready(() => {
     const selectUser = () => {
         usersDropdown = $('#users-dropdown');
         currentUser = usersDropdown[0].options[usersDropdown[0].options.selectedIndex].value;
+        filterSettings = 'all';
         displayStocks();
     };
 
@@ -284,6 +286,17 @@ $(document).ready(() => {
 
     $('#users-dropdown').on('change', (event) => {
         selectUser();
+    });
+
+    const depositFunds = (funds) => {
+        users[currentUser].funds += funds;
+    };
+
+    $('#deposit-input').keypress((event) => {
+        if(event.which == 13){
+            event.preventDefault();
+            depositFunds(parseInt(event.target.value));
+        }
     });
 
     
