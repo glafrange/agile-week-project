@@ -91,7 +91,7 @@ $(document).ready(() => {
         if(Object.keys(stocks).length === 0) return;
         let filteredStocks = filterStocks();
         filteredStocks = filterOwned(filteredStocks);
-        let sortedStocks = sortBy(Object.values(filteredStocks), currentSortProp, currentSortDirection);
+        let sortedStocks = sortBy(Object.values(filteredStocks), sortSettings);
         
         for(let stock of sortedStocks){
             //if (!filteredStocks.hasOwnProperty(key)) continue;
@@ -183,7 +183,7 @@ $(document).ready(() => {
     };
     
     // Sort the array by prop and direction
-    function sortBy(array, prop, direction){  
+    function sortBy(array, {prop, direction}){  
         
         array.sort((a,b) => {
             if (a[prop] < b[prop]) {
@@ -203,24 +203,26 @@ $(document).ready(() => {
     }
 
     // Sort settings
-    let currentSortProp = 'ticker';
-    let currentSortDirection = 'dsc';
+    let sortSettings = {
+        prop: 'ticker',
+        direction: 'dsc'
+    };
 
     // Event handler to set sort settings for the display function
     $('#sort-list').on('change', function() {
         let current = $(this).val();
         if (current === "ticker-a" ){
-            currentSortProp = 'ticker';
-            currentSortDirection = 'asc';
+            sortSettings.prop = 'ticker';
+            sortSettings.direction = 'asc';
         } else if (current === "ticker-z"){
-            currentSortProp = 'ticker';
-            currentSortDirection = 'dsc';
+            sortSettings.prop = 'ticker';
+            sortSettings.direction = 'dsc';
         } else if (current === "price-high"){
-            currentSortProp = 'price';
-            currentSortDirection = 'dsc';
+            sortSettings.prop = 'price';
+            sortSettings.direction = 'dsc';
         } else if (current === "price-low"){
-            currentSortProp = 'price';
-            currentSortDirection = 'asc';
+            sortSettings.prop = 'price';
+            sortSettings.direction = 'asc';
         }
 
         displayStocks();
