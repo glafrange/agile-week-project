@@ -68,7 +68,7 @@ $(document).ready(() => {
     const addStocks = (stockInput, price) => {
         let newStock = new Stock(stockInput, price, currentUser);
         stocks[stockInput] = newStock;
-        users[currentUser].stocks[stockInput] = {ticker: stockInput, owned: false};
+        users[currentUser].stocks[stockInput] = {ticker: stockInput, price: price, owned: false};
         displayStocks();
     };
     
@@ -297,11 +297,24 @@ $(document).ready(() => {
             let purchaseAmount = $(event.target).closest('tr').find(".buy-stock-input").val();
             console.log(buyStockName, purchaseAmount);
             displayStocks();
+
+            let funds = users[currentUser].funds;
+            let stockPrice = purchaseAmount * users[currentUser].stocks[buyStockName].price;
+            if(funds > stockPrice) {
+                funds -= stockPrice;
+                alert('New funds: ' + funds);
+            } else {
+                alert(`You only have $${funds} and tried to spend $${stockPrice}`)
+            }
+            ; 
+            //console.log("this " + users[currentUser].stocks[buyStockName].price);
+            //console.log(users[currentUser].stocks[buyStockName])
         });
     }
 
     const depositFunds = (funds) => {
         users[currentUser].funds += funds;
+        console.log(users[currentUser].funds);
     };
 
     $('#deposit-input').keypress((event) => {
