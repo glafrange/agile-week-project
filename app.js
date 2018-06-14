@@ -86,13 +86,13 @@ $(document).ready(() => {
     // Displays Stocks
     const displayStocks = () => {
         $("tbody").empty();
-
+        
         if(Object.keys(users).length === 0) return;
         if(Object.keys(stocks).length === 0) return;
         let filteredStocks = filterStocks();
         filteredStocks = filterOwned(filteredStocks);
         let sortedStocks = sortBy(Object.values(filteredStocks), currentSortProp, currentSortDirection);
-
+        
         for(let stock of sortedStocks){
             //if (!filteredStocks.hasOwnProperty(key)) continue;
             let stockData = `<tr id=${stock.ticker}><td align="center"><input type="checkbox" class="form-check-input owned-toggle"></td>`;
@@ -314,7 +314,7 @@ $(document).ready(() => {
 
     loadCookies();
     loadUsers();
-    
+    displayStocks();
 });
 
 
