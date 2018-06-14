@@ -1,13 +1,13 @@
 /*global $*/
 $('body').hide();
-$('#content').hide();
 $('body').fadeIn(2000);
 $('#Favorite').hide();
 $('#Favorite').fadeIn(3000);
 
 $(document).ready(() => {
+    
 
-    const stocks = {};
+    let stocks = {};
 
     class Stock {
         constructor(ticker, price, name) {
@@ -51,9 +51,9 @@ $(document).ready(() => {
                         alert("We don't recognize this ticker symbol, please check your input and try again");
                     },
                     complete: function(){
-                        $('.loading').hide();
-                        $('#Favorite').fadeIn(2000);
-                        $('#content').fadeIn(1200);
+                        // $('.loading').hide();
+                        // $('#Favorite').fadeIn(2000);
+                        // $('#content').fadeIn(1200);
     
                     }   
                 });
@@ -73,49 +73,48 @@ $(document).ready(() => {
     };
     
     const delStocks = () =>{     
-    $('.delStocks').click(function(event){
-    var stockName = $(event.target).closest('tr').find("[prop='ticker']").html();
-    delete stocks[stockName];
-    console.log(stockName);
-    console.log(stocks);
-    displayStocks();
-    
-});
-};
-    // Displays Stock 
+        $('.delStocks').click(function(event){
+            var stockName = $(event.target).closest('tr').find("[prop='ticker']").html();
+            delete stocks[stockName];
+            delete users[currentUser].stocks[stockName];
+            console.log(stockName);
+            console.log(stocks);
+            displayStocks();   
+        });
+    };
+
+    // Displays Stocks
     const displayStocks = () => {
+        $("tbody").empty();
+        
         if(Object.keys(users).length === 0) return;
+        if(Object.keys(stocks).length === 0) return;
         let filteredStocks = filterStocks();
         filteredStocks = filterOwned(filteredStocks);
-        $("tbody").empty();
-        for(let key in filteredStocks){
-            if (!filteredStocks.hasOwnProperty(key)) continue;
-            let keyData = `<tr id=${key}><td align="center"><input type="checkbox" class="form-check-input owned-toggle"></td>`;
+        let sortedStocks = sortBy(Object.values(filteredStocks), currentSortProp, currentSortDirection);
+        
+        for(let stock of sortedStocks){
+            //if (!filteredStocks.hasOwnProperty(key)) continue;
+            let stockData = `<tr id=${stock.ticker}><td align="center"><input type="checkbox" class="form-check-input owned-toggle"></td>`;
              
         
-            let obj = filteredStocks[key];
-            for(let prop in obj) {
-                if (!obj.hasOwnProperty(prop)) continue;
-                 keyData += `<td prop=${prop}>${obj[prop]}</td> `;
+            //let obj = sortedStocks[key];
+            for(let prop in stock) {
+                if (!stock.hasOwnProperty(prop)) continue;
+                stockData += `<td prop=${prop}>${stock[prop]}</td> `;
             }
-
-
-            keyData += `<td align="center"><button class='delStocks' type="button">Delete </button></td>`;
-            keyData += `<td align="center"><button class='delStocks' type="button">Thing </button></td>`;
-
-            keyData += `<td align="center"><button class='delStocks' type="button">Delete</button></td>`;
-
-            keyData += "</tr>";
-            $("tbody").append(keyData );
+            stockData += `<td align="center"><button class='delStocks' type="button">Delete</button></td>`;
+            stockData += "</tr>";
+            $("tbody").append(stockData );
             $("tbody tr:last-child").hide();
             $("tbody tr:last-child").fadeIn(1200);
 
-            const owned = users[currentUser].stocks[key].owned;
+            const owned = users[currentUser].stocks[stock.ticker].owned;
             $("tbody tr:last-child .owned-toggle")[0].checked = owned;
         }
         addOwnedToggleListener();
         delStocks();
-        //console.log(sortStocks(filteredStocks));
+        setCookies('stocks');
 
     };
 
@@ -179,9 +178,53 @@ $(document).ready(() => {
             console.log(users[currentUser].stocks[stockName].owned);
             displayStocks();
         });
+    };
+    
+    // Sort the array by prop and direction
+    function sortBy(array, prop, direction){  
+        
+        array.sort((a,b) => {
+            if (a[prop] < b[prop]) {
+                return -1;
+            }
+            if (a[prop] > b[prop]) {
+                return 1;
+            }
+            return 0;
+        });
+        
+        if (direction === 'dsc') {
+            array.reverse();
+        }
+
+        return array;
     }
 
-    const users = {};
+    // Sort settings
+    let currentSortProp = 'ticker';
+    let currentSortDirection = 'dsc';
+
+    // Event handler to set sort settings for the display function
+    $('#sort-list').on('change', function() {
+        let current = $(this).val();
+        if (current === "ticker-a" ){
+            currentSortProp = 'ticker';
+            currentSortDirection = 'asc';
+        } else if (current === "ticker-z"){
+            currentSortProp = 'ticker';
+            currentSortDirection = 'dsc';
+        } else if (current === "price-high"){
+            currentSortProp = 'price';
+            currentSortDirection = 'dsc';
+        } else if (current === "price-low"){
+            currentSortProp = 'price';
+            currentSortDirection = 'asc';
+        }
+
+        displayStocks();
+    }); 
+
+    let users = {};
 
     let currentUser = null;
     
@@ -201,8 +244,16 @@ $(document).ready(() => {
         };
         $('#users-dropdown').append("<option value='" + userName + "'>" + userName + "</option>");
         currentUser = userName;
-        displayStocks();
         $('#users-dropdown')[0].options.selectedIndex = $('#users-dropdown')[0].options.length - 1;
+        setCookies('users');
+        displayStocks();
+    };
+
+    const loadUsers = () => {
+        Object.keys(users).forEach(userName => {
+            $('#users-dropdown').append("<option value='" + userName + "'>" + userName + "</option>");
+        });
+        selectUserByUserName(currentUser);
     };
 
     $('#add-user-input').keypress((event) => {
@@ -223,48 +274,45 @@ $(document).ready(() => {
         usersDropdown = $('#users-dropdown');
         currentUser = usersDropdown[0].options[usersDropdown[0].options.selectedIndex].value;
         displayStocks();
-    }
+    };
+
+    const selectUserByUserName = (userName) => {
+        $('#users-dropdown')[0].options.selectedIndex = Array.from($('#users-dropdown')[0].options).map((item) => {
+            return item.value;
+        }).indexOf(userName);
+    };
 
     $('#users-dropdown').on('change', (event) => {
         selectUser();
     });
 
-    displayStocks();
-
-
-    const sortStocks = (obj) => {
-
-        // Send objects into an array
-        let stockArray = Object.keys(obj).map(i => {
-            let stockObj = stocks[i];
-            return stockObj;
-        });
+    
+    const setCookies = (type) => {
+        usersJSON = JSON.stringify(users);
+        stocksJSON = JSON.stringify(stocks);
+        currentUserJSON = JSON.stringify(currentUser);
         
-        // Sort the array by prop and direction
-        function sortBy(array, prop, direction){  
-            
-            array.sort((a,b) => {
-                if (a[prop] < b[prop]) {
-                    return -1;
-                }
-                if (a[prop] > b[prop]) {
-                    return 1;
-                }
-                return 0;
-            });
-            
-            if (direction === 'dsc') {
-                array.reverse();
-            }
+        $.cookie('users', usersJSON);
+        $.cookie('stocks', stocksJSON);
+        $.cookie('currentUser', currentUserJSON);
+    };
 
-            return array;
+    const loadCookies = () => {
+        if ($.cookie('users')) {
+            users = JSON.parse($.cookie('users'));
+            console.log(users);
         }
+        if ($.cookie('currentUser')) {
+            currentUser = JSON.parse($.cookie('currentUser'));
+            console.log("currentusercookie:" + JSON.parse($.cookie('currentUser')));
+        }
+        if ($.cookie('stocks')) {
+            stocks = JSON.parse($.cookie('stocks'));
+            console.log(stocks);
+        }
+    };
 
-        let sorted = sortBy(stockArray, 'price', 'dsc');
-        return sorted;
-    }; 
-        
-        
+    loadCookies();
+    loadUsers();
+    displayStocks();
 });
-
-
