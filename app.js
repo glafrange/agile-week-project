@@ -68,7 +68,7 @@ $(document).ready(() => {
     const addStocks = (stockInput, price) => {
         let newStock = new Stock(stockInput, price, currentUser);
         stocks[stockInput] = newStock;
-        users[currentUser].stocks[stockInput] = {ticker: stockInput, price: price, owned: false};
+        users[currentUser].stocks[stockInput] = {ticker: stockInput, price: price, owned: false, shares: 0};
         displayStocks();
     };
     
@@ -290,31 +290,37 @@ $(document).ready(() => {
         selectUser();
     });
 
-    
-    const purchaseStocks = (totalFunds) => {
+   
+    const purchaseStocks = () => {
         $(".buy-stock-btn, input[type='button']").click(function(event){
             let buyStockName = $(event.target).closest('tr').find("[prop='ticker']").html();
             let purchaseAmount = $(event.target).closest('tr').find(".buy-stock-input").val();
+            purchaseAmount = parseInt(purchaseAmount);
             console.log(buyStockName, purchaseAmount);
             displayStocks();
 
-            let funds = users[currentUser].funds;
-            let stockPrice = purchaseAmount * users[currentUser].stocks[buyStockName].price;
+            funds = users[currentUser].funds;
+            stockPrice = purchaseAmount * users[currentUser].stocks[buyStockName].price;
+            shares = purchaseAmount + users[currentUser].stocks[buyStockName].shares;
             if(funds > stockPrice) {
                 funds -= stockPrice;
-                alert('New funds: ' + funds);
+                alert(`SUCCESS: You purchased ${purchaseAmount} shares. You have ${shares} total shares of ${buyStockName}.`);
+                users[currentUser].funds = funds;
+                users[currentUser].stocks[buyStockName].shares = shares;
             } else {
                 alert(`You only have $${funds} and tried to spend $${stockPrice}`)
-            }
-            ; 
+            }; 
             //console.log("this " + users[currentUser].stocks[buyStockName].price);
-            //console.log(users[currentUser].stocks[buyStockName])
+            
+            console.log(users[currentUser]);
         });
-    }
+
+        
+    };
 
     const depositFunds = (funds) => {
         users[currentUser].funds += funds;
-        console.log(users[currentUser].funds);
+        console.log(users[currentUser]);
     };
 
     $('#deposit-input').keypress((event) => {
