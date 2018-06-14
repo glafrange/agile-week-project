@@ -95,8 +95,9 @@ $(document).ready(() => {
         
         for(let stock of sortedStocks){
             //if (!filteredStocks.hasOwnProperty(key)) continue;
-            let stockData = `<tr id=${stock.ticker}><td align="center"><input type="checkbox" class="form-check-input owned-toggle"></td>`;
-             
+            let stockData = `<tr id=${stock.ticker}><td align="center"><input type="checkbox" class="form-check-input owned-toggle">
+                                                                       <input class="buy-stock-input" type="number" placeholder="Enter Amount" />
+                                                                       <button class="buy-stock-btn" type="button">Submit</button></td>`;             
         
             //let obj = sortedStocks[key];
             for(let prop in stock) {
@@ -115,6 +116,7 @@ $(document).ready(() => {
         addOwnedToggleListener();
         delStocks();
         setCookies('stocks');
+        purchaseStocks();
 
     };
 
@@ -287,6 +289,16 @@ $(document).ready(() => {
     $('#users-dropdown').on('change', (event) => {
         selectUser();
     });
+
+    
+    const purchaseStocks = (totalFunds) => {
+        $(".buy-stock-btn, input[type='button']").click(function(event){
+            let buyStockName = $(event.target).closest('tr').find("[prop='ticker']").html();
+            let purchaseAmount = $(event.target).closest('tr').find(".buy-stock-input").val();
+            console.log(buyStockName, purchaseAmount);
+            displayStocks();
+        });
+    }
 
     const depositFunds = (funds) => {
         users[currentUser].funds += funds;
