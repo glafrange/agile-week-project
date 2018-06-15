@@ -5,11 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Agile Week Project</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    
 </head>
 <body>
+<<<<<<< HEAD
     <div class="jumbotron">
         <h1>Stock Watcher</h1>
     </div>
@@ -70,11 +73,72 @@
                         
                     </tbody>
                 </table>
+=======
+    <div id="wrapper">
+        <div class="container-fluid" id="main">
+            <div class="row content">
+                <div class="col-sm-3" id="sidenav">
+                    <div id="user-logo">
+                        <i class="fas fa-user-circle fa-5x"></i>
+                        <h2>Connor</h2>
+                    </div>
+                    <ul class="nav nav-pills flex-column" id="nav-items">
+                        <li class="active"><a href="#">Dashboard</a></li>
+                        <li><a href="#">My Stocks</a></li>
+                        <li><a href="#">My Funds</a></li>
+                        <li><a href="#">News</a></li>
+                        <li><a href="#">Discover (beta)</a></li>
+                    </ul><br>
+                    <br>
+                </div>
+            
+                <div class="col-sm-9" id="content">
+                        <div id="header" class="inputWithIcon navbar sticky-top"> <!-- Logo, header, nav, searchbar etc -->
+                            <form onsubmit="return false">
+                                <input type="text" id="add-user-input" placeholder="Your name"/><i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
+                                <button type="button" title="Add User" data-toggle="tooltip" id="add-user-btn">Add User</button>
+                                <select id="users-dropdown"></select>
+                                
+                                <button type="button" title="Show-All" data-toggle="tooltip" id="show-all-btn">Show all</button>
+                                <button type="button" title="Show-Owned" data-toggle="tooltip" id="show-owned-btn">only owned</button>
+                                <button type="button" title="Hide-Owned" data-toggle="tooltip" id="hide-owned-btn">only unowned</button>
+                                <input type="text" id="searchList" placeholder="Search for a stock" />
+                                <select id="sort-list">
+                                    <option value="ticker-a">TICKER: A-Z</option>
+                                    <option value="ticker-z">TICKER: Z-A</option>
+                                    <option value="price-high">PRICE: High - Low</option>
+                                    <option value="price-low">PRICE: Low - High</option>
+                                </select>
+                            </form>
+                        </div>
+                    <div id="table-box" class="row">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-3"></div>
+                        <div id="table-head" class="col-sm-6">
+                            <input type="text" id="stock-input" placeholder="Add a stock" />
+                            <button type="button" title="Add-Stock" data-toggle="tooltip" id="add-stock-btn">Submit</button>
+                        </div>
+                        <table class="table table-striped" id="stock-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col" id="owned-col"></th>
+                                    <th scope="col" id="ticker-col">Ticker</th>
+                                    <th scope="col" id="price-col">Price</th>
+                                    <th scope="col" id="owner-col">Owner</th>
+                                    <th scope="col" id="delete-col">Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+>>>>>>> connor
         </div>
-
-        <div id="footer"> <!-- Company info, copyright, etc -->
-        </div>
-    </div>  
+    </div>
+  
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
