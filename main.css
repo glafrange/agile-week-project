@@ -32,20 +32,41 @@ body {
 }
 
 #table-head {
-    padding: 20px 0 20px 60px;
+    width: 100%;
+    padding: 20px;
+}
+
+#sort-button-group {
+    padding: 20px 0 0 20px;
+}
+
+#add-stock-container {
+    width: 200px;
+    margin: 0;
+}
+
+.mb-3 {
+    margin-bottom: 0 !important;
 }
 
 #table-box {
     background-color: #ffffff;
+    box-shadow: 0 0 2px rgba(0,0,0,.20);
     margin: 20px;
-    box-shadow: 0 0 2px rgba(0,0,0,.20)
+    padding-bottom: 20px;
 }
 
 #sidenav {
-    padding-top: 80px;
+    padding-top: 20px;
     background-color: #004056;
     color: #ffffff;
     min-height: 100vh;
+}
+
+#tradepro-logo {
+    font-family: "Josefin Sans";
+    text-align: center;
+    padding-bottom: 30px;
 }
 
 #nav-items {
