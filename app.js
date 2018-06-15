@@ -250,6 +250,7 @@ $(document).ready(() => {
         $('#users-dropdown').append("<option value='" + userName + "'>" + userName + "</option>");
         currentUser = userName;
         $('#users-dropdown')[0].options.selectedIndex = $('#users-dropdown')[0].options.length - 1;
+        $('#user-logo h2').html(userName);
         setCookies('users');
         displayStocks();
     };
@@ -278,6 +279,7 @@ $(document).ready(() => {
     const selectUser = () => {
         usersDropdown = $('#users-dropdown');
         currentUser = usersDropdown[0].options[usersDropdown[0].options.selectedIndex].value;
+        $('#user-logo h2').html(currentUser);
         filterSettings = 'all';
         displayStocks();
     };
@@ -286,6 +288,7 @@ $(document).ready(() => {
         $('#users-dropdown')[0].options.selectedIndex = Array.from($('#users-dropdown')[0].options).map((item) => {
             return item.value;
         }).indexOf(userName);
+        $('#user-logo h2').html(userName);
     };
 
     $('#users-dropdown').on('change', (event) => {
@@ -333,7 +336,7 @@ $(document).ready(() => {
     });
 
     
-    const setCookies = (type) => {
+    const setCookies = () => {
         usersJSON = JSON.stringify(users);
         stocksJSON = JSON.stringify(stocks);
         currentUserJSON = JSON.stringify(currentUser);
@@ -346,15 +349,12 @@ $(document).ready(() => {
     const loadCookies = () => {
         if ($.cookie('users')) {
             users = JSON.parse($.cookie('users'));
-            console.log(users);
         }
         if ($.cookie('currentUser')) {
             currentUser = JSON.parse($.cookie('currentUser'));
-            console.log("currentusercookie:" + JSON.parse($.cookie('currentUser')));
         }
         if ($.cookie('stocks')) {
             stocks = JSON.parse($.cookie('stocks'));
-            console.log(stocks);
         }
     };
         $('.search-button').click(function(){
