@@ -5,7 +5,8 @@ html {
 body {
     min-height: 100vh;
     height: 100vh;
-    font-family: Roboto !important;
+    font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    -webkit-font-smoothing: antialiased;
 }
 
 #wrapper {
@@ -23,6 +24,7 @@ body {
 
 #content {
     min-height: 100vh;
+    padding: 0px;
 } 
 
 #stock-table {
@@ -36,11 +38,12 @@ body {
 #table-box {
     background-color: #ffffff;
     margin: 20px;
+    box-shadow: 0 0 2px rgba(0,0,0,.20)
 }
 
 #sidenav {
     padding-top: 80px;
-    background-color: #00518f;
+    background-color: #004056;
     color: #ffffff;
     min-height: 100vh;
 }
