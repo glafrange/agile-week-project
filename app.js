@@ -205,7 +205,7 @@ $(document).ready(() => {
     // Sort settings
     let sortSettings = {
         prop: 'ticker',
-        direction: 'dsc'
+        direction: 'asc'
     };
 
     // Event handler to set sort settings for the display function
