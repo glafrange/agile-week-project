@@ -357,7 +357,9 @@ $(document).ready(() => {
             console.log(stocks);
         }
     };
-
+        $('.search-button').click(function(){
+          $(this).parent().toggleClass('open');
+        });
     loadCookies();
     loadUsers();
     displayStocks();
