@@ -233,6 +233,8 @@ $(document).ready(() => {
     let currentUser = null;
     
     const addUser = (userName) => {
+        if (userName.length === 0) return;
+
         let userNames = [];
         Object.keys(users).forEach((user) => userNames.push(user));
         if (userNames.includes(userName)) {
