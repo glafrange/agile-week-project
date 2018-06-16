@@ -97,7 +97,8 @@ $(document).ready(() => {
             //if (!filteredStocks.hasOwnProperty(key)) continue;
             let stockData = `<tr id=${stock.ticker}><td align="center"><input type="checkbox" class="form-check-input owned-toggle">
                                                                        <input class="buy-stock-input" type="number" placeholder="Enter Amount" />
-                                                                       <button class="buy-stock-btn" type="button">Submit</button></td>`;             
+                                                                       <button class="buy-stock-btn" type="button">Buy</button>
+                                                                       <button class="sell-stock-btn" type="button">Sell</button></td>`;             
         
             //let obj = sortedStocks[key];
             for(let prop in stock) {
@@ -117,6 +118,7 @@ $(document).ready(() => {
         delStocks();
         setCookies('stocks');
         purchaseStocks();
+        sellStocks();
 
     };
 
@@ -301,7 +303,7 @@ $(document).ready(() => {
             let buyStockName = $(event.target).closest('tr').find("[prop='ticker']").html();
             let purchaseAmount = $(event.target).closest('tr').find(".buy-stock-input").val();
             purchaseAmount = parseInt(purchaseAmount);
-            console.log(buyStockName, purchaseAmount);
+        
             displayStocks();
 
             funds = users[currentUser].funds;
@@ -313,14 +315,37 @@ $(document).ready(() => {
                 users[currentUser].funds = funds;
                 users[currentUser].stocks[buyStockName].shares = shares;
             } else {
-                alert(`You only have $${funds} and tried to spend $${stockPrice}`)
+                alert(`You have $${funds} and tried to spend $${stockPrice}`)
             }; 
+            //console.log("this " + users[currentUser].stocks[buyStockName].price);
+            console.log(users[currentUser]);
+        });   
+    };
+
+    const sellStocks = () => {
+        $(".sell-stock-btn, input[type='button']").click(function(event){
+            let sellStockName = $(event.target).closest('tr').find("[prop='ticker']").html();
+            let sellAmount = $(event.target).closest('tr').find(".buy-stock-input").val();
+            sellAmount = parseInt(sellAmount);
+            console.log(sellStockName, sellAmount);
+            displayStocks();
+
+            funds = users[currentUser].funds;
+            stockPrice = sellAmount * users[currentUser].stocks[sellStockName].price;
+            shares = users[currentUser].stocks[sellStockName].shares;
+            if(shares - sellAmount >= 0) {
+                shares = sellAmount - users[currentUser].stocks[sellStockName].shares;
+                funds += stockPrice;
+                alert(`SUCCESS: You sold ${sellAmount} shares. You have ${shares} total shares of ${sellStockName}.`);
+                users[currentUser].funds = funds;
+                users[currentUser].stocks[sellStockName].shares = shares;
+            } else {
+                alert(`You have ${shares} shares and tried to sell ${sellAmount} shares.`);
+            }
             //console.log("this " + users[currentUser].stocks[buyStockName].price);
             
             console.log(users[currentUser]);
-        });
-
-        
+        });   
     };
 
     const depositFunds = (funds) => {
