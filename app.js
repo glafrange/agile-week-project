@@ -316,10 +316,11 @@ $(document).ready(() => {
         
             displayStocks();
 
-            funds = users[currentUser].funds;
-            stockPrice = purchaseAmount * users[currentUser].stocks[buyStockName].price;
-            shares = purchaseAmount + users[currentUser].stocks[buyStockName].shares;
+            let funds = users[currentUser].funds;
+            let stockPrice = purchaseAmount * users[currentUser].stocks[buyStockName].price;
+            let shares = purchaseAmount + users[currentUser].stocks[buyStockName].shares;
             if(funds > stockPrice) {
+
                 funds -= stockPrice;
                 alert(`SUCCESS: You purchased ${purchaseAmount} shares. You have ${shares} total shares of ${buyStockName}.`);
                 users[currentUser].funds = funds;
@@ -341,17 +342,20 @@ $(document).ready(() => {
             console.log(sellStockName, sellAmount);
             displayStocks();
 
-            funds = users[currentUser].funds;
-            stockPrice = sellAmount * users[currentUser].stocks[sellStockName].price;
-            shares = users[currentUser].stocks[sellStockName].shares;
-            if(shares - sellAmount >= 0) {
+            let funds = users[currentUser].funds;
+            let stockPrice = sellAmount * users[currentUser].stocks[sellStockName].price;
+            let shares = users[currentUser].stocks[sellStockName].shares;
+
+            let change = shares - sellAmount;
+            console.log(change);
+            if(change >= 0) {
                 shares = sellAmount - users[currentUser].stocks[sellStockName].shares;
                 funds += stockPrice;
-                alert(`SUCCESS: You sold ${sellAmount} shares. You have ${shares} total shares of ${sellStockName}.`);
+                alert(`SUCCESS: You sold ${sellAmount} share(s). You have ${shares} total share(s) of ${sellStockName}.`);
                 users[currentUser].funds = funds;
                 users[currentUser].stocks[sellStockName].shares = shares;
             } else {
-                alert(`You have ${shares} shares and tried to sell ${sellAmount} shares.`);
+                alert(`ERROR: You have ${shares} share(s) and tried to sell ${sellAmount} share(s).`);
             }
             //console.log("this " + users[currentUser].stocks[buyStockName].price);
             
