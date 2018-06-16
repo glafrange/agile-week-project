@@ -1,8 +1,6 @@
 /*global $*/
 $('body').hide();
 $('body').fadeIn(2000);
-$('#Favorite').hide();
-$('#Favorite').fadeIn(3000);
 
 $(document).ready(() => {
     
@@ -322,13 +320,13 @@ $(document).ready(() => {
 
     const depositFunds = (funds) => {
         users[currentUser].funds += funds;
-        console.log(users[currentUser]);
     };
 
     $('#deposit-input').keypress((event) => {
         if(event.which == 13){
             event.preventDefault();
             depositFunds(parseInt(event.target.value));
+            $('#funds-amount').append('<h3>' + users[currentUser].funds + '</h3>');
         }
     });
 
