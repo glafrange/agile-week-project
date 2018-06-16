@@ -156,20 +156,30 @@ $(document).ready(() => {
     // show all stocks
     $('#show-all-btn').click((event) => {
         filterSettings = 'all';
+        highlightOwnedButton('show-all-btn');
         displayStocks();
     });
 
     // show only owned stocks
     $('#show-owned-btn').click((event) => {
         filterSettings = 'owned';
+        highlightOwnedButton('show-owned-btn');
         displayStocks();
     });
 
     // show only unowned stocks
     $('#hide-owned-btn').click((event) => {
         filterSettings = 'unowned';
+        highlightOwnedButton('hide-owned-btn');
         displayStocks();
     });
+
+    const highlightOwnedButton = (id) => {
+        $('#sort-button-group .btn-outline-primary').addClass('btn-outline-secondary');
+        $('#sort-button-group .btn-outline-primary').removeClass('btn-outline-primary');
+        $(`#${id}`).removeClass('btn-outline-secondary');
+        $(`#${id}`).addClass('btn-outline-primary');
+    }
 
     // toggle owned stocks
     const addOwnedToggleListener = () => {
