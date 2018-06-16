@@ -22,6 +22,7 @@
                     <div id="user-logo">
                         <i class="fas fa-user-circle fa-5x"></i>
                         <h2>Connor</h2>
+                        <h3 id="funds-amount"></h3>
                     </div>
                     <ul class="nav nav-pills flex-column" id="nav-items">
                         <li class="active"><a href="#">Dashboard</a></li>
@@ -78,6 +79,26 @@
                             <button type="button" class="btn btn-sm btn-outline-secondary" title="Show Owned" data-toggle="tooltip" data-placement="bottom" id="show-owned-btn">Owned</button>
                             <button type="button" class="btn btn-sm btn-outline-secondary" title="Hide Owned" data-toggle="tooltip" data-placement="bottom" id="hide-owned-btn">Unowned</button>
                         </div>
+                        <button type="button" title="Deposit Funds" data-toggle="modal" data-target="#deposit-modal" id="deposit-funds-btn">Deposit Funds</button>
+                <div class="modal" id="deposit-modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                    <div class="modal-dialogue" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Deposit Funds</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <input id="deposit-input" placeholder="Enter amount of funds to deposit"/>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                     </div>
                     
                 </div>
