@@ -366,7 +366,7 @@ $(document).ready(() => {
         if(event.which == 13){
             event.preventDefault();
             depositFunds(parseInt(event.target.value));
-            $('#funds-amount').append('<h3>' + users[currentUser].funds + '</h3>');
+            $('#funds-amount').html(users[currentUser].funds);
         }
     });
 
