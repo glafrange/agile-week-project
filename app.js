@@ -319,6 +319,7 @@ $(document).ready(() => {
             }; 
             //console.log("this " + users[currentUser].stocks[buyStockName].price);
             console.log(users[currentUser]);
+            $('#funds-amount').html(users[currentUser].funds).formatCurrency();
         });   
     };
 
@@ -345,6 +346,7 @@ $(document).ready(() => {
             //console.log("this " + users[currentUser].stocks[buyStockName].price);
             
             console.log(users[currentUser]);
+            $('#funds-amount').html(users[currentUser].funds).formatCurrency();
         });   
     };
 
@@ -356,7 +358,7 @@ $(document).ready(() => {
         if(event.which == 13){
             event.preventDefault();
             depositFunds(parseInt(event.target.value));
-            $('#funds-amount').html(users[currentUser].funds);
+            $('#funds-amount').html(users[currentUser].funds).formatCurrency();
         }
     });
 
