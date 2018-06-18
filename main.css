@@ -82,6 +82,10 @@ body {
     padding-bottom: 20px;
 }
 
+#deposit-modal {
+    color: #151515;
+}
+
 input[type=text] {
     width: 135px;
     -webkit-transition: width 0.4s ease-in-out;
