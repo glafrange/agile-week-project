@@ -1,8 +1,6 @@
 /*global $*/
 $('body').hide();
 $('body').fadeIn(2000);
-$('#Favorite').hide();
-$('#Favorite').fadeIn(3000);
 
 $(document).ready(() => {
     
@@ -68,7 +66,7 @@ $(document).ready(() => {
     const addStocks = (stockInput, price) => {
         let newStock = new Stock(stockInput, price, currentUser);
         stocks[stockInput] = newStock;
-        users[currentUser].stocks[stockInput] = {ticker: stockInput, owned: false};
+        users[currentUser].stocks[stockInput] = {ticker: stockInput, price: price, owned: false, shares: 0};
         displayStocks();
     };
     
@@ -91,6 +89,7 @@ $(document).ready(() => {
         if(Object.keys(stocks).length === 0) return;
         let filteredStocks = filterStocks();
         filteredStocks = filterOwned(filteredStocks);
+<<<<<<< HEAD
         let sortedStocks = sortBy(Object.values(filteredStocks), currentSortProp, currentSortDirection);
         
         for(let stock of sortedStocks){
@@ -102,6 +101,25 @@ $(document).ready(() => {
             for(let prop in stock) {
                 if (!stock.hasOwnProperty(prop)) continue;
                 stockData += `<td prop=${prop}>${stock[prop]}</td> `;
+=======
+        let sortedStocks = sortBy(Object.values(filteredStocks), sortSettings);
+        
+        for(let stock of sortedStocks){
+            //if (!filteredStocks.hasOwnProperty(key)) continue;
+            let stockData = `<tr id=${stock.ticker}><td align="center"><input type="checkbox" class="form-check-input owned-toggle">
+                                                                       <input class="buy-stock-input" type="number" placeholder="Enter Amount" />
+                                                                       <button class="buy-stock-btn" type="button">Buy</button>
+                                                                       <button class="sell-stock-btn" type="button">Sell</button></td>`;             
+        
+            //let obj = sortedStocks[key];
+            for(let prop in stock) {
+                if (!stock.hasOwnProperty(prop)) continue;
+                if (prop === 'price') {
+                    stockData += `<td prop=${prop}>$${stock[prop]}</td> `;
+                } else {
+                    stockData += `<td prop=${prop}>${stock[prop]}</td> `;
+                }
+>>>>>>> 4ebd24f6b4d6089a75c0de7976afba56b47c93c9
             }
             stockData += `<td align="center"><button class='delStocks' type="button">Delete</button></td>`;
             stockData += "</tr>";
@@ -115,6 +133,11 @@ $(document).ready(() => {
         addOwnedToggleListener();
         delStocks();
         setCookies('stocks');
+<<<<<<< HEAD
+=======
+        purchaseStocks();
+        sellStocks();
+>>>>>>> 4ebd24f6b4d6089a75c0de7976afba56b47c93c9
 
     };
 
@@ -154,20 +177,30 @@ $(document).ready(() => {
     // show all stocks
     $('#show-all-btn').click((event) => {
         filterSettings = 'all';
+        highlightOwnedButton('show-all-btn');
         displayStocks();
     });
 
     // show only owned stocks
     $('#show-owned-btn').click((event) => {
         filterSettings = 'owned';
+        highlightOwnedButton('show-owned-btn');
         displayStocks();
     });
 
     // show only unowned stocks
     $('#hide-owned-btn').click((event) => {
         filterSettings = 'unowned';
+        highlightOwnedButton('hide-owned-btn');
         displayStocks();
     });
+
+    const highlightOwnedButton = (id) => {
+        $('#sort-button-group .btn-outline-primary').addClass('btn-outline-secondary');
+        $('#sort-button-group .btn-outline-primary').removeClass('btn-outline-primary');
+        $(`#${id}`).removeClass('btn-outline-secondary');
+        $(`#${id}`).addClass('btn-outline-primary');
+    }
 
     // toggle owned stocks
     const addOwnedToggleListener = () => {
@@ -181,7 +214,11 @@ $(document).ready(() => {
     };
     
     // Sort the array by prop and direction
+<<<<<<< HEAD
     function sortBy(array, prop, direction){  
+=======
+    function sortBy(array, {prop, direction}){  
+>>>>>>> 4ebd24f6b4d6089a75c0de7976afba56b47c93c9
         
         array.sort((a,b) => {
             if (a[prop] < b[prop]) {
@@ -201,13 +238,21 @@ $(document).ready(() => {
     }
 
     // Sort settings
+<<<<<<< HEAD
     let currentSortProp = 'ticker';
     let currentSortDirection = 'dsc';
+=======
+    let sortSettings = {
+        prop: 'ticker',
+        direction: 'asc'
+    };
+>>>>>>> 4ebd24f6b4d6089a75c0de7976afba56b47c93c9
 
     // Event handler to set sort settings for the display function
     $('#sort-list').on('change', function() {
         let current = $(this).val();
         if (current === "ticker-a" ){
+<<<<<<< HEAD
             currentSortProp = 'ticker';
             currentSortDirection = 'asc';
         } else if (current === "ticker-z"){
@@ -219,6 +264,19 @@ $(document).ready(() => {
         } else if (current === "price-low"){
             currentSortProp = 'price';
             currentSortDirection = 'asc';
+=======
+            sortSettings.prop = 'ticker';
+            sortSettings.direction = 'asc';
+        } else if (current === "ticker-z"){
+            sortSettings.prop = 'ticker';
+            sortSettings.direction = 'dsc';
+        } else if (current === "price-high"){
+            sortSettings.prop = 'price';
+            sortSettings.direction = 'dsc';
+        } else if (current === "price-low"){
+            sortSettings.prop = 'price';
+            sortSettings.direction = 'asc';
+>>>>>>> 4ebd24f6b4d6089a75c0de7976afba56b47c93c9
         }
 
         displayStocks();
@@ -229,6 +287,8 @@ $(document).ready(() => {
     let currentUser = null;
     
     const addUser = (userName) => {
+        if (userName.length === 0) return;
+
         let userNames = [];
         Object.keys(users).forEach((user) => userNames.push(user));
         if (userNames.includes(userName)) {
@@ -240,11 +300,18 @@ $(document).ready(() => {
         }
         users[userName] = {
             name: userName,
-            stocks: {}
+            stocks: {},
+            funds: 0
         };
         $('#users-dropdown').append("<option value='" + userName + "'>" + userName + "</option>");
         currentUser = userName;
         $('#users-dropdown')[0].options.selectedIndex = $('#users-dropdown')[0].options.length - 1;
+<<<<<<< HEAD
+=======
+        $('#user-logo h2').html(userName);
+        $('#funds-amount').html(users[currentUser].funds).formatCurrency();
+        highlightOwnedButton('show-all-btn');
+>>>>>>> 4ebd24f6b4d6089a75c0de7976afba56b47c93c9
         setCookies('users');
         displayStocks();
     };
@@ -273,6 +340,10 @@ $(document).ready(() => {
     const selectUser = () => {
         usersDropdown = $('#users-dropdown');
         currentUser = usersDropdown[0].options[usersDropdown[0].options.selectedIndex].value;
+        $('#user-logo h2').html(currentUser);
+        $('#funds-amount').html(users[currentUser].funds).formatCurrency();
+        highlightOwnedButton('show-all-btn');
+        filterSettings = 'all';
         displayStocks();
     };
 
@@ -280,12 +351,19 @@ $(document).ready(() => {
         $('#users-dropdown')[0].options.selectedIndex = Array.from($('#users-dropdown')[0].options).map((item) => {
             return item.value;
         }).indexOf(userName);
+<<<<<<< HEAD
+=======
+        $('#user-logo h2').html(userName);
+        $('#funds-amount').html(users[currentUser].funds).formatCurrency();
+        highlightOwnedButton('show-all-btn');
+>>>>>>> 4ebd24f6b4d6089a75c0de7976afba56b47c93c9
     };
 
     $('#users-dropdown').on('change', (event) => {
         selectUser();
     });
 
+<<<<<<< HEAD
     
     const setCookies = (type) => {
         usersJSON = JSON.stringify(users);
@@ -316,3 +394,107 @@ $(document).ready(() => {
     loadUsers();
     displayStocks();
 });
+=======
+   
+    const purchaseStocks = () => {
+        $(".buy-stock-btn, input[type='button']").click(function(event){
+            let buyStockName = $(event.target).closest('tr').find("[prop='ticker']").html();
+            let purchaseAmount = $(event.target).closest('tr').find(".buy-stock-input").val();
+            purchaseAmount = parseInt(purchaseAmount);
+        
+            displayStocks();
+
+            let funds = users[currentUser].funds;
+            let stockPrice = purchaseAmount * users[currentUser].stocks[buyStockName].price;
+            let shares = purchaseAmount + users[currentUser].stocks[buyStockName].shares;
+            if(funds > stockPrice) {
+
+                funds -= stockPrice;
+                alert(`SUCCESS: You purchased ${purchaseAmount} shares. You have ${shares} total shares of ${buyStockName}.`);
+                users[currentUser].funds = funds;
+                users[currentUser].stocks[buyStockName].shares = shares;
+            } else {
+                alert(`You have $${funds} and tried to spend $${stockPrice}`)
+            }; 
+            //console.log("this " + users[currentUser].stocks[buyStockName].price);
+            console.log(users[currentUser]);
+            $('#funds-amount').html(users[currentUser].funds).formatCurrency();
+        });   
+    };
+
+    const sellStocks = () => {
+        $(".sell-stock-btn, input[type='button']").click(function(event){
+            let sellStockName = $(event.target).closest('tr').find("[prop='ticker']").html();
+            let sellAmount = $(event.target).closest('tr').find(".buy-stock-input").val();
+            sellAmount = parseInt(sellAmount);
+            console.log(sellStockName, sellAmount);
+            displayStocks();
+
+            let funds = users[currentUser].funds;
+            let stockPrice = sellAmount * users[currentUser].stocks[sellStockName].price;
+            let shares = users[currentUser].stocks[sellStockName].shares;
+
+            let change = shares - sellAmount;
+            console.log(change);
+            if(change >= 0) {
+                shares = users[currentUser].stocks[sellStockName].shares - sellAmount;
+                funds += stockPrice;
+                alert(`SUCCESS: You sold ${sellAmount} share(s). You have ${shares} total share(s) of ${sellStockName}.`);
+                users[currentUser].funds = funds;
+                users[currentUser].stocks[sellStockName].shares = shares;
+            } else {
+                alert(`ERROR: You have ${shares} share(s) and tried to sell ${sellAmount} share(s).`);
+            }
+            //console.log("this " + users[currentUser].stocks[buyStockName].price);
+            
+            console.log(users[currentUser]);
+            $('#funds-amount').html(users[currentUser].funds).formatCurrency();
+        });   
+    };
+
+    const depositFunds = (funds) => {
+        if (funds <= 0) {
+            alert('Please deposit more than 0 dollars');
+            return;
+        };
+        users[currentUser].funds += funds;
+        $('#funds-amount').html(users[currentUser].funds).formatCurrency();
+    };
+
+    $('#deposit-input').keypress((event) => {
+        if(event.which == 13){
+            event.preventDefault();
+            depositFunds(parseInt(event.target.value));
+        }
+    });
+
+    
+    const setCookies = () => {
+        usersJSON = JSON.stringify(users);
+        stocksJSON = JSON.stringify(stocks);
+        currentUserJSON = JSON.stringify(currentUser);
+        
+        $.cookie('users', usersJSON);
+        $.cookie('stocks', stocksJSON);
+        $.cookie('currentUser', currentUserJSON);
+    };
+
+    const loadCookies = () => {
+        if ($.cookie('users')) {
+            users = JSON.parse($.cookie('users'));
+        }
+        if ($.cookie('currentUser')) {
+            currentUser = JSON.parse($.cookie('currentUser'));
+        }
+        if ($.cookie('stocks')) {
+            stocks = JSON.parse($.cookie('stocks'));
+        }
+    };
+        $('.search-button').click(function(){
+          $(this).parent().toggleClass('open');
+        });
+    loadCookies();
+    loadUsers();
+    displayStocks();
+});
+>>>>>>> 4ebd24f6b4d6089a75c0de7976afba56b47c93c9
