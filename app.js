@@ -264,6 +264,7 @@ $(document).ready(() => {
         $('#users-dropdown')[0].options.selectedIndex = $('#users-dropdown')[0].options.length - 1;
         $('#user-logo h2').html(userName);
         $('#funds-amount').html(users[currentUser].funds).formatCurrency();
+        highlightOwnedButton('show-all-btn');
         setCookies('users');
         displayStocks();
     };
@@ -294,6 +295,7 @@ $(document).ready(() => {
         currentUser = usersDropdown[0].options[usersDropdown[0].options.selectedIndex].value;
         $('#user-logo h2').html(currentUser);
         $('#funds-amount').html(users[currentUser].funds).formatCurrency();
+        highlightOwnedButton('show-all-btn');
         filterSettings = 'all';
         displayStocks();
     };
@@ -304,6 +306,7 @@ $(document).ready(() => {
         }).indexOf(userName);
         $('#user-logo h2').html(userName);
         $('#funds-amount').html(users[currentUser].funds).formatCurrency();
+        highlightOwnedButton('show-all-btn');
     };
 
     $('#users-dropdown').on('change', (event) => {
