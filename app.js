@@ -37,7 +37,7 @@ $(document).ready(() => {
             const stockInput = $('#stock-input').val().toUpperCase();
             function callAPI() {
                 var query = $('#stock-input').val();
-                var url = "https://api.iextrading.com/1.0/stock/" + query + "/batch?types=price";
+                var url = "https://api.iextrading.com/1.0/stock/" + query + "/batch?types=price,company";
                 $.ajax({
                     url: url,
                     type: 'POST',

@@ -24,9 +24,9 @@
                         <h2>Connor</h2>
                         <h3 id="funds-amount"></h3>
                         <button type="button" class="btn btn-sm btn-outline-secondary" title="Deposit Funds" data-toggle="modal" data-target="#deposit-modal" id="deposit-funds-btn">Deposit Funds</button>
-                            <div class="modal" id="deposit-modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                            <div class="modal fade" id="deposit-modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal">
-                                    <div class="modal-content">
+                                    <div class="modal-content" id="deposit-modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title">Enter amount to deposit</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -37,7 +37,7 @@
                                             <input type="text" size="80"  id="deposit-input" placeholder="$"/>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary" data-dismiss="modal">Close</button>
                                         </div>
                                     </div>
                                 </div>
