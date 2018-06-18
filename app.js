@@ -375,6 +375,10 @@ $(document).ready(() => {
     };
 
     const depositFunds = (funds) => {
+        if (funds <= 0) {
+            alert('Please deposit more than 0 dollars');
+            return;
+        };
         users[currentUser].funds += funds;
         $('#funds-amount').html(users[currentUser].funds).formatCurrency();
     };
