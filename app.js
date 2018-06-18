@@ -101,7 +101,11 @@ $(document).ready(() => {
             //let obj = sortedStocks[key];
             for(let prop in stock) {
                 if (!stock.hasOwnProperty(prop)) continue;
-                stockData += `<td prop=${prop}>${stock[prop]}</td> `;
+                if (prop === 'price') {
+                    stockData += `<td prop=${prop}>$${stock[prop]}</td> `;
+                } else {
+                    stockData += `<td prop=${prop}>${stock[prop]}</td> `;
+                }
             }
             stockData += `<td align="center"><button class='delStocks' type="button">Delete</button></td>`;
             stockData += "</tr>";
