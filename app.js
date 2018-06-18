@@ -335,8 +335,10 @@ $(document).ready(() => {
                 alert(`SUCCESS: You purchased ${purchaseAmount} shares. You have ${shares} total shares of ${buyStockName}.`);
                 users[currentUser].funds = funds;
                 users[currentUser].stocks[buyStockName].shares = shares;
+                displayStocks();
             } else {
-                alert(`You have $${funds} and tried to spend $${stockPrice}`)
+                alert(`You have $${funds} and tried to spend $${stockPrice}`);
+                displayStocks();
             }; 
             //console.log("this " + users[currentUser].stocks[buyStockName].price);
             console.log(users[currentUser]);
@@ -364,14 +366,18 @@ $(document).ready(() => {
                 alert(`SUCCESS: You sold ${sellAmount} share(s). You have ${shares} total share(s) of ${sellStockName}.`);
                 users[currentUser].funds = funds;
                 users[currentUser].stocks[sellStockName].shares = shares;
+                displayStocks();
             } else {
                 alert(`ERROR: You have ${shares} share(s) and tried to sell ${sellAmount} share(s).`);
+                displayStocks();
             }
             //console.log("this " + users[currentUser].stocks[buyStockName].price);
             
             console.log(users[currentUser]);
             $('#funds-amount').html(users[currentUser].funds).formatCurrency();
+            
         });   
+        
     };
 
     const depositFunds = (funds) => {
