@@ -359,7 +359,7 @@ $(document).ready(() => {
             let change = shares - sellAmount;
             console.log(change);
             if(change >= 0) {
-                shares = sellAmount - users[currentUser].stocks[sellStockName].shares;
+                shares = users[currentUser].stocks[sellStockName].shares - sellAmount;
                 funds += stockPrice;
                 alert(`SUCCESS: You sold ${sellAmount} share(s). You have ${shares} total share(s) of ${sellStockName}.`);
                 users[currentUser].funds = funds;
