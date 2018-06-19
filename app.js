@@ -115,10 +115,14 @@ $(document).ready(() => {
                 if (!stock.hasOwnProperty(prop)) continue;
                 if (prop === 'price') {
                     stockData += `<td prop=${prop}>$${stock[prop]}</td> `;
+                } else if (prop === 'name'){
+                    continue;
                 } else {
                     stockData += `<td prop=${prop}>${stock[prop]}</td> `;
                 }
             }
+            //let sName = 
+            stockData += `<td align="center">${users[currentUser].stocks[stock.ticker].shares} </td>`;
             stockData += `<td align="center"><button class='delStocks' type="button">Delete</button></td>`;
             stockData += "</tr>";
             $("tbody").append(stockData );
@@ -405,10 +409,12 @@ $(document).ready(() => {
     };
 
     const depositFunds = (funds) => {
+    
         if (funds <= 0) {
             alert('Please deposit more than 0 dollars');
             return;
-        };
+        }
+
         users[currentUser].funds += funds;
         $('#funds-amount').html(users[currentUser].funds).formatCurrency();
     };
@@ -416,6 +422,12 @@ $(document).ready(() => {
     $('#deposit-input').keypress((event) => {
         if(event.which == 13){
             event.preventDefault();
+            const regEx = /^-?\d+\.?\d*$/;
+            const input = event.target.value;
+            if (!regEx.test(input)) {
+                alert(`${input} is not a valid input. Please enter a number.`);
+                return;
+            };
             depositFunds(parseInt(event.target.value));
         }
     });
