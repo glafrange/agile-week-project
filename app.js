@@ -108,10 +108,14 @@ $(document).ready(() => {
                 if (!stock.hasOwnProperty(prop)) continue;
                 if (prop === 'price') {
                     stockData += `<td prop=${prop}>$${stock[prop]}</td> `;
+                } else if (prop === 'name'){
+                    continue;
                 } else {
                     stockData += `<td prop=${prop}>${stock[prop]}</td> `;
                 }
             }
+            //let sName = 
+            stockData += `<td align="center">${users[currentUser].stocks[stock.ticker].shares} </td>`;
             stockData += `<td align="center"><button class='delStocks' type="button">Delete</button></td>`;
             stockData += "</tr>";
             $("tbody").append(stockData );
