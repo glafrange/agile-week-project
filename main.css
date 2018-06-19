@@ -91,6 +91,11 @@ body {
     border: 0px;
 }
 
+#sort-list {
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+}
+
 input[type=text] {
     width: 135px;
     -webkit-transition: width 0.4s ease-in-out;

@@ -96,7 +96,7 @@ $(document).ready(() => {
     // Displays Stocks
     const displayStocks = () => {
         $("tbody").empty();
-        
+        let totalPortfolio = 0;
         if(Object.keys(users).length === 0) return;
         if(Object.keys(stocks).length === 0) return;
         let filteredStocks = filterStocks();
@@ -105,7 +105,7 @@ $(document).ready(() => {
         let sortedStocks = sortBy(Object.values(filteredStocks), sortSettings);
         for(let stock of sortedStocks){
             //if (!filteredStocks.hasOwnProperty(key)) continue;
-            let stockData = `<tr id=${stock.ticker}><td align="center"><input type="checkbox" class="form-check-input owned-toggle" checked="${users[currentUser].stocks[stock.ticker].owned}">
+            let stockData = `<tr id=${stock.ticker}><td><input align="center" type="checkbox" class="form-check-input owned-toggle" checked="${users[currentUser].stocks[stock.ticker].owned}">
                                                                        <input class="buy-stock-input" type="number" placeholder="Enter Amount" />
                                                                        <button class="buy-stock-btn" type="button">Buy</button>
                                                                        <button class="sell-stock-btn" type="button">Sell</button></td>`;             
@@ -121,17 +121,28 @@ $(document).ready(() => {
                     stockData += `<td prop=${prop}>${stock[prop]}</td> `;
                 }
             }
-            //let sName = 
-            stockData += `<td align="center">${users[currentUser].stocks[stock.ticker].shares} </td>`;
-            stockData += `<td align="center"><button class='delStocks' type="button">Delete</button></td>`;
+            
+            if (users[currentUser].stocks[stock.ticker].shares > 0){
+                stockData += `<td>${users[currentUser].stocks[stock.ticker].shares} @ $${(users[currentUser].stocks[stock.ticker].shares * users[currentUser].stocks[stock.ticker].price).toFixed(2)}</td>`;
+                totalPortfolio += parseFloat((users[currentUser].stocks[stock.ticker].shares * users[currentUser].stocks[stock.ticker].price).toFixed(2));
+            } else {
+                stockData += `<td>${users[currentUser].stocks[stock.ticker].shares}</td>`;
+            }
+            
+            stockData += `<td><button class='delStocks' type="button">Delete</button></td>`;
             stockData += "</tr>";
             $("tbody").append(stockData );
             $("tbody tr:last-child").hide();
             $("tbody tr:last-child").fadeIn(1200);
+            $("#p-amount").html(totalPortfolio).formatCurrency();
 
             const owned = users[currentUser].stocks[stock.ticker].owned;
             $("tbody tr:last-child .owned-toggle")[0].checked = owned;
+    
         }
+
+        
+
         addOwnedToggleListener();
         delStocks();
         setCookies('stocks');
@@ -384,6 +395,9 @@ $(document).ready(() => {
                 users[currentUser].funds = funds;
                 users[currentUser].stocks[buyStockName].shares = shares;
                 displayStocks();
+              
+                
+
             } else {
                 alert(`You have $${funds} and tried to spend $${stockPrice}`);
                 displayStocks();
