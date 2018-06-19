@@ -134,15 +134,13 @@ $(document).ready(() => {
             $("tbody").append(stockData );
             $("tbody tr:last-child").hide();
             $("tbody tr:last-child").fadeIn(1200);
-            $("#p-amount").html('');
-            $("#p-amount").html(totalPortfolio).formatCurrency();
-
             const owned = users[currentUser].stocks[stock.ticker].owned;
             $("tbody tr:last-child .owned-toggle")[0].checked = owned;
     
         }
 
-        
+        $("#p-amount").html('');
+        $("#p-amount").html(totalPortfolio).formatCurrency();
 
         addOwnedToggleListener();
         delStocks();
