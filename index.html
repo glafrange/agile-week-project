@@ -24,7 +24,7 @@
                         <h2>Connor</h2>
                         <h3 id="funds-amount"></h3>
                         <span class="pulse red-tooltip" title="Add money in a pinch!" data-toggle="tooltip" style="display: inline-block; position: absolute; margin-left: -10px; margin-top: -10px; z-index: 1;"></span>
-                        <button type="button" class="btn btn-sm btn-outline-secondary" title="Deposit Funds" data-toggle="modal" data-target="#deposit-modal" id="deposit-funds-btn">Deposit Funds</button>
+                        <button type="button" class="btn btn-sm btn-secondary" title="Deposit Funds" data-toggle="modal" data-target="#deposit-modal" id="deposit-funds-btn">Deposit Funds</button>
                             <div class="modal fade" id="deposit-modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal">
                                     <div class="modal-content" id="deposit-modal-content">
@@ -57,19 +57,22 @@
             
                 <div class="col-sm-9" id="content">
                         <div id="header" class="inputWithIcon navbar sticky-top"> <!-- Logo, header, nav, searchbar etc -->
-                            <form onsubmit="return false">
-                                <input type="text" id="add-user-input" placeholder="Your name"/><i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
-                                <button type="button" title="Add User" data-toggle="tooltip" id="add-user-btn">Add User</button>
-                                <select id="users-dropdown"></select>
-                                
-                                
-                                <input type="text" id="searchList" placeholder="Search for a stock" />
-                                
+                            <form class="form-control" onsubmit="return false">
+                                <div class="input-group" style="padding:10px;">
+                                    <i class="fa fa-user fa-lg fa-fw" style="margin-top: 10px; margin-left: -7px; margin-right:10px;" aria-hidden="true"></i>
+                                    <input type="text" class="form-control" id="add-user-input" placeholder="Your name"/>
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" title="Add User" data-toggle="tooltip" id="add-user-btn" style="margin-right: 20px;">Add User</button>
+                                    </div>
+                                    <select class="form-control form-control-outline-secondary" id="users-dropdown"></select>
+                                </div>
                             </form>
                         </div>
                     <div id="table-box" class="row">
                         <div id="table-head">
-                                
+                            <div class="float-left input-group mb-3" style="width: 200px;">
+                                <input type="text" class="float-left form-control" id="searchList" placeholder="Search for a stock" />
+                            </div>
                             <div class="float-right input-group mb-3" id="add-stock-container">
                                     <span class="pulse red-tooltip" title="Try adding a stock!" data-toggle="tooltip" style="margin-right:-10px; margin-top: -10px; z-index: 1;"></span>
                                 <input class="float-right form-control" type="text" id="stock-input" placeholder="Enter ticker name" />
