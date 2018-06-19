@@ -17,6 +17,13 @@ $(document).ready(() => {
 
 
     // Allows Enter key to submit
+    $('#searchList').keypress((event) => {
+        if(event.which == 13){
+            event.preventDefault();
+            $('#search-lst-btn').click();
+        }
+    });
+    
     $('#stock-input').keypress((event) => {
         if(event.which == 13){
             event.preventDefault();
@@ -94,8 +101,8 @@ $(document).ready(() => {
         if(Object.keys(stocks).length === 0) return;
         let filteredStocks = filterStocks();
         filteredStocks = filterOwned(filteredStocks);
+        filteredStocks = filterList(filteredStocks);
         let sortedStocks = sortBy(Object.values(filteredStocks), sortSettings);
-        
         for(let stock of sortedStocks){
             //if (!filteredStocks.hasOwnProperty(key)) continue;
             let stockData = `<tr id=${stock.ticker}><td align="center"><input type="checkbox" class="form-check-input owned-toggle">
@@ -133,6 +140,18 @@ $(document).ready(() => {
 
     };
 
+    document.getElementById('searchList').addEventListener('keyup', displayStocks );
+    function filterList(filteredStocks){
+            let result = document.getElementById('searchList').value.toUpperCase();
+            let keys = Object.keys(filteredStocks);
+            let newFilteredStocks = {}; 
+            keys.forEach(key => {
+              if (key.indexOf(result) >= 0){
+                newFilteredStocks[key] = filteredStocks[key];
+              }
+            });
+            return newFilteredStocks;
+        }
 
     // Filter
     const filterStocks = () => {
@@ -318,7 +337,7 @@ $(document).ready(() => {
             return item.value;
         }).indexOf(userName);
         $('#user-logo h2').html(userName);
-        $('#funds-amount').html(users[currentUser].funds).formatCurrency();
+        if (currentUser) $('#funds-amount').html(users[currentUser].funds).formatCurrency();
         highlightOwnedButton('show-all-btn');
     };
 
