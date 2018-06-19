@@ -18,6 +18,13 @@ body {
     padding: 20px 20px 0 20px;
 }
 
+#header-group {
+    background-color: #ffffff;
+    box-shadow: 0 0 2px rgba(0,0,0,.20);
+    border-radius: 0px;
+    border: 0px;
+}
+
 #main {
     min-height: 100vh;
 }
