@@ -337,7 +337,7 @@ $(document).ready(() => {
             return item.value;
         }).indexOf(userName);
         $('#user-logo h2').html(userName);
-        $('#funds-amount').html(users[currentUser].funds).formatCurrency();
+        if (currentUser) $('#funds-amount').html(users[currentUser].funds).formatCurrency();
         highlightOwnedButton('show-all-btn');
     };
 
