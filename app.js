@@ -105,8 +105,8 @@ $(document).ready(() => {
         let sortedStocks = sortBy(Object.values(filteredStocks), sortSettings);
         for(let stock of sortedStocks){
             //if (!filteredStocks.hasOwnProperty(key)) continue;
-            let stockData = `<tr id=${stock.ticker}><td><input align="center" type="checkbox" class="form-check-input owned-toggle" checked="${users[currentUser].stocks[stock.ticker].owned}">
-                                                                       <input class="buy-stock-input" type="number" placeholder="Enter Amount" />
+            let stockData = `<tr id=${stock.ticker}><td><input type="checkbox" style="margin-left:0px !important;" class="form-check-input owned-toggle" checked="${users[currentUser].stocks[stock.ticker].owned}"></td>
+                                                                       <td><input class="buy-stock-input" type="number" placeholder="Enter Amount" />
                                                                        <button class="buy-stock-btn" type="button">Buy</button>
                                                                        <button class="sell-stock-btn" type="button">Sell</button></td>`;             
         
