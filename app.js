@@ -105,7 +105,7 @@ $(document).ready(() => {
         let sortedStocks = sortBy(Object.values(filteredStocks), sortSettings);
         for(let stock of sortedStocks){
             //if (!filteredStocks.hasOwnProperty(key)) continue;
-            let stockData = `<tr id=${stock.ticker}><td align="center"><input type="checkbox" class="form-check-input owned-toggle">
+            let stockData = `<tr id=${stock.ticker}><td align="center"><input type="checkbox" class="form-check-input owned-toggle" checked="${users[currentUser].stocks[stock.ticker].owned}">
                                                                        <input class="buy-stock-input" type="number" placeholder="Enter Amount" />
                                                                        <button class="buy-stock-btn" type="button">Buy</button>
                                                                        <button class="sell-stock-btn" type="button">Sell</button></td>`;             
@@ -171,11 +171,31 @@ $(document).ready(() => {
 
 
     const filterOwned = (stocks) => {
-        if (filterSettings === 'all') return stocks;
         const filteredStockNames = Object.keys(stocks).filter((stockName) => {
-            const owned = users[currentUser].stocks[stockName].owned;
-            if (filterSettings === 'owned') return owned;
-            else if (filterSettings === 'unowned') return !owned;
+            const shares = users[currentUser].stocks[stockName].shares;
+            if (filterSettings === 'all') {
+                if (shares > 0) {
+                    users[currentUser].stocks[stockName].owned = true;
+                    return true;
+                } else {
+                    users[currentUser].stocks[stockName].owned = false;
+                    return true;
+                }
+            }else if (filterSettings === 'owned') {
+                if (shares > 0) {
+                    users[currentUser].stocks[stockName].owned = true;
+                    return true;
+                } else {
+                    users[currentUser].stocks[stockName].owned = false;
+                }
+            }else if (filterSettings === 'unowned') {
+                if (shares === 0) {
+                    users[currentUser].stocks[stockName].owned = false;
+                    return true;
+                } else {
+                    users[currentUser].stocks[stockName].owned = true;
+                }
+            };
         });
         const filteredStocks = {};
         filteredStockNames.forEach((stockName) => {
@@ -352,7 +372,7 @@ $(document).ready(() => {
             let purchaseAmount = $(event.target).closest('tr').find(".buy-stock-input").val();
             purchaseAmount = parseInt(purchaseAmount);
         
-            displayStocks();
+            //displayStocks();
 
             let funds = users[currentUser].funds;
             let stockPrice = purchaseAmount * users[currentUser].stocks[buyStockName].price;
