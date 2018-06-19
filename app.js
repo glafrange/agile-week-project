@@ -325,6 +325,7 @@ $(document).ready(() => {
         };
         $('#users-dropdown').append("<option value='" + userName + "'>" + userName + "</option>");
         currentUser = userName;
+        $('#searchList').val("");
         $('#users-dropdown')[0].options.selectedIndex = $('#users-dropdown')[0].options.length - 1;
         $('#user-logo h2').html(userName);
         $('#funds-amount').html(users[currentUser].funds).formatCurrency();
@@ -358,6 +359,7 @@ $(document).ready(() => {
     const selectUser = () => {
         usersDropdown = $('#users-dropdown');
         currentUser = usersDropdown[0].options[usersDropdown[0].options.selectedIndex].value;
+        $('#searchList').val("");
         $('#user-logo h2').html(currentUser);
         $('#funds-amount').html(users[currentUser].funds).formatCurrency();
         highlightOwnedButton('show-all-btn');
@@ -369,6 +371,7 @@ $(document).ready(() => {
         $('#users-dropdown')[0].options.selectedIndex = Array.from($('#users-dropdown')[0].options).map((item) => {
             return item.value;
         }).indexOf(userName);
+        $('#searchList').val("");
         $('#user-logo h2').html(userName);
         if (currentUser) $('#funds-amount').html(users[currentUser].funds).formatCurrency();
         highlightOwnedButton('show-all-btn');
