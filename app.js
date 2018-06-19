@@ -134,6 +134,7 @@ $(document).ready(() => {
             $("tbody").append(stockData );
             $("tbody tr:last-child").hide();
             $("tbody tr:last-child").fadeIn(1200);
+            $("#p-amount").html('');
             $("#p-amount").html(totalPortfolio).formatCurrency();
 
             const owned = users[currentUser].stocks[stock.ticker].owned;
@@ -327,6 +328,7 @@ $(document).ready(() => {
         $('#users-dropdown')[0].options.selectedIndex = $('#users-dropdown')[0].options.length - 1;
         $('#user-logo h2').html(userName);
         $('#funds-amount').html(users[currentUser].funds).formatCurrency();
+        $('#p-amount').html('');
         highlightOwnedButton('show-all-btn');
         setCookies('users');
         displayStocks();
