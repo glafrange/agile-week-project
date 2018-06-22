@@ -113,8 +113,8 @@ $(document).ready(() => {
             //if (!filteredStocks.hasOwnProperty(key)) continue;
             let stockData = `<tr id=${stock.ticker}><td><input type="checkbox" style="margin-left:0px !important;" class="form-check-input owned-toggle" checked="${users[currentUser].stocks[stock.ticker].owned}"></td>
                                                                        <td><input class="buy-stock-input" type="number" placeholder="Enter Amount" />
-                                                                       <button class="buy-stock-btn" type="button">Buy</button>
-                                                                       <button class="sell-stock-btn" type="button">Sell</button></td>`;             
+                                                                       <button class="buy-stock-btn btn btn-sm btn-outline-dark" type="button">Buy</button>
+                                                                       <button class="sell-stock-btn btn btn-sm btn-outline-dark" type="button">Sell</button></td>`;             
         
             //let obj = sortedStocks[key];
             for(let prop in stock) {
@@ -135,7 +135,7 @@ $(document).ready(() => {
                 stockData += `<td>${users[currentUser].stocks[stock.ticker].shares}</td>`;
             }
             
-            stockData += `<td><button class='delStocks' type="button">Delete</button></td>`;
+            stockData += `<td><button class='delStocks btn btn-sm btn-outline-dark' type="button">Delete</button></td>`;
             stockData += "</tr>";
             $("tbody").append(stockData );
             $("tbody tr:last-child").hide();
@@ -401,8 +401,8 @@ $(document).ready(() => {
 
                 funds -= stockPrice;
                 //alert(`SUCCESS: You purchased ${purchaseAmount} shares. You have ${shares} total shares of ${buyStockName}.`);
-                $("#purchase-success-body").html(`You purchased <span class="font-weight-bold">${purchaseAmount}</span> shares.`);
-                $("#success-popover").attr("data-content", `You have ${shares} total shares of ${buyStockName}.`);
+                $("#purchase-success-body").html(`You purchased <span class="font-weight-bold">${purchaseAmount}</span> share(s).`);
+                $("#success-popover").attr("data-content", `You have ${shares} total share(s) of ${buyStockName}.`);
                 $("#purchase-success").modal('show');
                 users[currentUser].funds = funds;
                 users[currentUser].stocks[buyStockName].shares = shares;
@@ -431,7 +431,7 @@ $(document).ready(() => {
             displayStocks();
 
             let funds = users[currentUser].funds;
-            let stockPrice = sellAmount * users[currentUser].stocks[sellStockName].price;
+            let stockPrice = parseFloat((sellAmount * users[currentUser].stocks[sellStockName].price).toFixed(2));
             let shares = users[currentUser].stocks[sellStockName].shares;
 
             let change = shares - sellAmount;
@@ -441,7 +441,7 @@ $(document).ready(() => {
                 funds += stockPrice;
                 //alert(`SUCCESS: You sold ${sellAmount} share(s). You have ${shares} total share(s) of ${sellStockName}.`);
                 $("#purchase-success-body").html(`You sold <span class="font-weight-bold">${sellAmount}</span> share(s).`);
-                $("#success-popover").attr("data-content", `You have ${shares} total share(s) of ${sellStockName}.`);
+                $("#success-popover").attr("data-content", `You now have ${shares} total share(s) of ${sellStockName} and made $${stockPrice}.`);
                 $("#purchase-success").modal('show');
                 users[currentUser].funds = funds;
                 users[currentUser].stocks[sellStockName].shares = shares;
