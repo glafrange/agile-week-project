@@ -42,6 +42,12 @@ $(document).ready(() => {
         $('[data-toggle="tooltip"]').tooltip()
     });
 
+    $(function () {
+        $('[data-toggle="popover"]').popover({
+            container: 'body'
+        })
+      });
+
 
     // Gets form input value, current user, and stock price from API, 
     // saves as an object and pushes to the stock array
@@ -394,7 +400,10 @@ $(document).ready(() => {
             if(funds > stockPrice) {
 
                 funds -= stockPrice;
-                alert(`SUCCESS: You purchased ${purchaseAmount} shares. You have ${shares} total shares of ${buyStockName}.`);
+                //alert(`SUCCESS: You purchased ${purchaseAmount} shares. You have ${shares} total shares of ${buyStockName}.`);
+                $("#purchase-success-body").html(`You purchased <span class="font-weight-bold">${purchaseAmount}</span> shares.`);
+                $("#success-popover").attr("data-content", `You have ${shares} total shares of ${buyStockName}.`);
+                $("#purchase-success").modal('show');
                 users[currentUser].funds = funds;
                 users[currentUser].stocks[buyStockName].shares = shares;
                 displayStocks();
@@ -402,7 +411,9 @@ $(document).ready(() => {
                 
 
             } else {
-                alert(`You have $${funds} and tried to spend $${stockPrice}`);
+                //alert(`You have $${funds} and tried to spend $${stockPrice}`);
+                $("#purchase-fail-body").html("You have <span class='font-weight-bold'>$" + parseFloat(funds.toFixed(2)) + "</span> but tried to spend <span class='font-weight-bold text-danger'>$" + parseFloat(stockPrice.toFixed(2)) + "</span>");
+                $("#purchase-fail").modal('show');
                 displayStocks();
             }; 
             //console.log("this " + users[currentUser].stocks[buyStockName].price);
@@ -428,12 +439,17 @@ $(document).ready(() => {
             if(change >= 0) {
                 shares = users[currentUser].stocks[sellStockName].shares - sellAmount;
                 funds += stockPrice;
-                alert(`SUCCESS: You sold ${sellAmount} share(s). You have ${shares} total share(s) of ${sellStockName}.`);
+                //alert(`SUCCESS: You sold ${sellAmount} share(s). You have ${shares} total share(s) of ${sellStockName}.`);
+                $("#purchase-success-body").html(`You sold <span class="font-weight-bold">${sellAmount}</span> share(s).`);
+                $("#success-popover").attr("data-content", `You have ${shares} total share(s) of ${sellStockName}.`);
+                $("#purchase-success").modal('show');
                 users[currentUser].funds = funds;
                 users[currentUser].stocks[sellStockName].shares = shares;
                 displayStocks();
             } else {
-                alert(`ERROR: You have ${shares} share(s) and tried to sell ${sellAmount} share(s).`);
+                //alert(`ERROR: You have ${shares} share(s) and tried to sell ${sellAmount} share(s).`);
+                $("#purchase-fail-body").html(`You have <span class="font-weight-bold">${shares}</span> share(s) but tried to sell <span class="font-weight-bold text-danger">${sellAmount}</span> share(s).`);
+                $("#purchase-fail").modal('show');
                 displayStocks();
             }
             //console.log("this " + users[currentUser].stocks[buyStockName].price);
