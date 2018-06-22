@@ -148,7 +148,7 @@ $(document).ready(() => {
             for(let prop in stock) {
                 if (!stock.hasOwnProperty(prop)) continue;
                 if (prop === 'price') {
-                    let newPrice = parseFloat(stock[prop].toFixed(2));
+                    let newPrice = Number.parseFloat(stock[prop]).toFixed(2);
                     stockData += `<td prop=${prop}>$${newPrice}</td>`;
                 } else if (prop === 'name'){
                     continue;
