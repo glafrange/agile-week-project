@@ -69,14 +69,14 @@ $(document).ready(() => {
             const stockInput = $('#stock-input').val().toUpperCase();
             function callAPI() {
                 var query = $('#stock-input').val();
-                var url = "https://api.iextrading.com/1.0/stock/" + query + "/batch?types=price,company";
+                var url = "https://api.iextrading.com/1.0/stock/" + query + "/batch?types=price,company,logo";
                 $.ajax({
                     url: url,
                     type: 'POST',
                     dataType: "jsonp",
               
                     success: (res) => {
-                        addStocks(stockInput, res.price, res.company)},
+                        addStocks(stockInput, res.price, res.company, res.logo)},
                     error: function(e){
                         $("#purchase-fail-body").html("<p class='text-center'>We don't recognize this ticker symbol!</p><p class='text-center'>Please check your input and try again</p>");
                         $("#purchase-fail").modal('show');
@@ -95,10 +95,10 @@ $(document).ready(() => {
     );
 
     // Add stock 
-    const addStocks = (stockInput, price, company) => {
-        let newStock = new Stock(stockInput, price, currentUser, company);
+    const addStocks = (stockInput, price, company, logo) => {
+        let newStock = new Stock(stockInput, price, currentUser, company, logo);
         stocks[stockInput] = newStock;
-        users[currentUser].stocks[stockInput] = {ticker: stockInput, price: price, owned: false, shares: 0, company: company};
+        users[currentUser].stocks[stockInput] = {ticker: stockInput, price: price, owned: false, shares: 0, company: company, logo: logo};
         displayStocks();
         console.log(users[currentUser]);
     };
@@ -121,14 +121,15 @@ $(document).ready(() => {
             //console.log(hoveredStock);
             console.log(users[currentUser].stocks[hoveredStock]);
             let currentCompanyInfo = users[currentUser].stocks[hoveredStock].company;
+            let companyLogo = users[currentUser].stocks[hoveredStock].logo;
             //console.log(currentCompanyInfo);
-            $("#comp-info-title").html(`${currentCompanyInfo.companyName}`);
+            $("#comp-info-title").html(`<img src='${companyLogo.url}' width='50px' style='margin-top:-10px; padding-right: 10px;'/>${currentCompanyInfo.companyName}`);
             $("#comp-info-body").html(`<div>${currentCompanyInfo.description}</div>
                                        <br>
-                                       <div>CEO: ${currentCompanyInfo.CEO}</div>
-                                       <div>Trades on: ${currentCompanyInfo.exchange}</div>
-                                       <div>Industy: ${currentCompanyInfo.industry}</div>
-                                       <div>website: <a href="${currentCompanyInfo.website}" target="_blank">${currentCompanyInfo.website}</a></div>`);
+                                       <div><b>CEO:</b> ${currentCompanyInfo.CEO}</div>
+                                       <div><b>Trades on:</b> ${currentCompanyInfo.exchange}</div>
+                                       <div><b>Industy:</b> ${currentCompanyInfo.industry}</div>
+                                       <div><b>Website:</b> <a href="${currentCompanyInfo.website}" target="_blank">${currentCompanyInfo.website}</a></div>`);
             $("#comp-info").modal("show");
         });
     };
