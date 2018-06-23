@@ -50,6 +50,19 @@ $(document).ready(() => {
         $(this).parent().toggleClass('open');
     });
 
+
+    $(".pulse1").click(function () {
+        $(".pulse1").css("display", "none");
+    });
+
+    $(".pulse2").click(function () {
+        $(".pulse2").css("display", "none");
+    });
+
+    $(".pulse3").click(function () {
+        $(".pulse3").css("display", "none");
+    });
+
     // Gets form input value, current user, and stock price from API, 
     // saves as an object and pushes to the stock array
     $('#add-stock-btn').click(() => {
