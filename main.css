@@ -93,6 +93,11 @@ body {
     color: #151515;
 }
 
+.modal-content, .modal-dialog {
+    border-radius: 0 !important;
+    border: 0px !important;
+}
+
 #deposit-modal-content {
     border-radius: 0;
     border: 0px;
