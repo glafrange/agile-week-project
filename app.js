@@ -29,6 +29,13 @@ $(document).ready(() => {
         }
     });
 
+    // Close deposit modal on enter
+    $('#deposit-input').keypress((event) => {
+        if(event.which === 13) {
+          $('#deposit-modal').modal('hide');
+        }
+      });
+
     // Every time a modal is shown, if it has an autofocus element, focus on it.
     $('.modal').on('shown.bs.modal', function() {
         $(this).find('[autofocus]').focus();
