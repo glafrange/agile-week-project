@@ -30,9 +30,10 @@ $(document).ready(() => {
     });
 
     // Close deposit modal on enter
-    $('#deposit-input').keypress((event) => {
+    $('#deposit-input').keyup((event) => {
         if(event.which === 13) {
-          $('#deposit-modal').modal('hide');
+            $('#deposit-modal').modal('hide');
+            event.currentTarget.value = "";
         }
       });
 
